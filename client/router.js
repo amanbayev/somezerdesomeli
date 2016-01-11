@@ -20,3 +20,15 @@ Router.route('/schools', function(){
 Router.route('/branches', function(){
   this.render('branches');
 })
+
+Router.route('/subjects', function(){
+  this.render('subjects');
+})
+
+Router.route('/teachers', function(){
+  this.render('teachers');
+})
+
+Router.route('/groups', function(){
+  this.render('groups');
+})

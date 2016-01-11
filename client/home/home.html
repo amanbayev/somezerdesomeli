@@ -1,5 +1,6 @@
 <template name="Home">
   {{#if currentUser}}
+  <!-- <div class="wrapper"> -->
     <header class="main-header">
       <a href="http://growit.kz" class="logo">
         <span class="logo-mini"><b>Z</b></span>
@@ -147,14 +148,14 @@
               <!-- The user image in the navbar-->
               <img src="/img/user2-160x160.jpg" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">Alexander Pierce</span>
+              <span class="hidden-xs">{{currentUser.profile.firstName}} {{currentUser.profile.lastName}}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
               <li class="user-header">
                 <img src="/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                 <p>
-                  Alexander Pierce - Web Developer
+                  {{currentUser.profile.firstName}} {{currentUser.profile.lastName}} - Web Developer
                   <small>Member since Nov. 2012</small>
                 </p>
               </li>
@@ -162,13 +163,13 @@
               <li class="user-body">
                 <div class="row">
                   <div class="col-xs-4 text-center">
-                    <a href="#">Followers</a>
+                    <a href="#">Оқушылар</a>
                   </div>
                   <div class="col-xs-4 text-center">
-                    <a href="#">Sales</a>
+                    <a href="#">Сабақтар</a>
                   </div>
                   <div class="col-xs-4 text-center">
-                    <a href="#">Friends</a>
+                    <a href="#">Достар</a>
                   </div>
                 </div>
                 <!-- /.row -->
@@ -176,10 +177,10 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <a href="#" class="btn btn-default btn-flat">Профиль</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat" id="signOutButton">Sign out</a>
+                  <a href="#" class="btn btn-default btn-flat" id="signOutButton">Шығу</a>
                 </div>
               </li>
             </ul>
@@ -205,16 +206,16 @@
             <img src="/img/user2-160x160.jpg" class="img-circle" alt="User Image">
           </div>
           <div class="pull-left info">
-            <p>Alexander Pierce</p>
+            <p>{{currentUser.profile.firstName}} {{currentUser.profile.lastName}}</p>
             <!-- Status -->
-            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+            <a href="#"><i class="fa fa-circle text-success"></i> Онлайн</a>
           </div>
         </div>
 
         <!-- search form (Optional) -->
         <form action="#" method="get" class="sidebar-form">
           <div class="input-group">
-            <input type="text" name="q" class="form-control" placeholder="Search...">
+            <input type="text" name="q" class="form-control" placeholder="Іздеу...">
                 <span class="input-group-btn">
                   <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
                   </button>
@@ -238,6 +239,16 @@
 
   </div>
   <!-- /.content-wrapper -->
+    <!-- Main Footer -->
+  <footer class="main-footer">
+    <!-- To the right -->
+    <div class="pull-right hidden-xs">
+      Zerdeli Ақыл-ой мектебі
+    </div>
+    <!-- Default to the left -->
+    <strong>Авторлық құқықпен қорғалған &copy; 2016 <a href="mailto:amanbayev@gmail.com">Талғат Аманбаев</a>.</strong> Барлық құқықтар сақталған.
+  </footer>
+<!-- </div> -->
   {{else}}
     {{> loginRegister}}
   {{/if}}

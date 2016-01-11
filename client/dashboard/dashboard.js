@@ -13,5 +13,23 @@ Template.dashboard.helpers({
       Session.set('branchesCount',c);
     });
     return Session.get('branchesCount');
+  },
+  TeachersCount: function(){
+    Meteor.call('getTeachersCount',function(e,c){
+      Session.set('teachersCount',c);
+    });
+    return Session.get('teachersCount');
+  },
+  SubjectsCount: function(){
+    Meteor.call('getSubjectsCount', function(e,c){
+      Session.set('subjectsCount', c);
+    });
+    return Session.get('subjectsCount');
+  },
+  GroupsCount: function(){
+    Meteor.call('getGroupsCount', function(c,t){
+      Session.set('groupsCount', c);
+    });
+    return Session.get('groupsCount');
   }
 });

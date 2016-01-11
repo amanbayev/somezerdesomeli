@@ -28,6 +28,7 @@ Template.loginRegister.events({
       userObject.profile.firstName = name;
       userObject.profile.lastName = Lname;
       userObject.profile.patronimic = Pname;
+      userObject.profile.createdAt = new Date();
 
       Accounts.createUser(userObject, function(){
          console.log('success');

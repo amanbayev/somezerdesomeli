@@ -1,0 +1,143 @@
+<template name="teachers">
+  <section class="content-header">
+    <h1>
+      <i class="fa fa-users"></i>&nbsp;Мұғалімдер
+      <small>Тіркеу немесе тізімін көру</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="/"><i class="fa fa-dashboard"></i>Басты бет</a></li>
+      <li class="active"><i class="fa fa-users"></i>&nbsp;Мұғалімдер</li>
+    </ol>
+  </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div>
+        {{#if isInRole 'admin'}}
+          <div class="{{hideOrNot}}">
+            <form>
+              <div class="form-group">
+                <div class="input-group">
+                  <input class="form-control" type="text" placeholder="Мұғалімнің аты" id="TeacherNameField">
+                  <div class="input-group-addon"><i class="fa fa-users"></i></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <input class="form-control" type="text" placeholder="Тегі" id="TeacherLastNameField">
+                  <div class="input-group-addon"><i class="fa fa-users"></i></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <input class="form-control" type="text" placeholder="Әкесінің аты" id="TeacherPatronimicNameField">
+                  <div class="input-group-addon"><i class="fa fa-users"></i></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <input class="form-control" type="tel" placeholder="+7 701 555 33 99" id="TeacherMobileField">
+                  <div class="input-group-addon"><i class="fa fa-phone"></i></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <input class="form-control" type="number" min="0" max="100" placeholder="Мұғалімнің %-і" id="TeacherPercentField">
+                  <div class="input-group-addon"><i class="fa fa-percent"></i></div>
+                </div>
+              </div>
+              <div class="row">
+                    <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                      <div class="input-group">
+                        <select id="TeacherSubjectsSelect" class="form-control" width="40%">
+                          {{#each Subjects}}
+                            <option>{{name}}</option>
+                          {{/each}}
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                      <div class="input-group">
+                        <button class="btn btn-default" type="button" id="addSubjectToTeacher">Пәнді мұғалімге қосу</button>
+                      </div>
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-12 col-md-6">
+                        <div class="box box-default">
+                          <div class="box-header with-border">
+                            <h3 class="box-title">Мұғалімнің пәндері</h3>
+                            <div class="box-tools pull-right">
+                              <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            </div><!-- /.box-tools -->
+                          </div><!-- /.box-header -->
+                          <div class="box-body">
+                            {{#each teacherSubjects}}
+                              <h3>
+                                <span class="label label-info">
+                                  {{getSubjectById this}}
+                                </span>
+                                <button id="{{this}}" class="removeSubjectFromTeacher btn btn-danger">
+                                  <i class="fa fa-trash-o"></i>
+                                </button>
+                              </h3>
+                            {{/each}}
+                          </div><!-- /.box-body -->
+                        </div><!-- /.box -->
+                    </div>
+              </div>
+              <div class="form-group">
+                <button type="button" class="btn btn-success" id="saveTeacherCreate">
+                  Сақтау
+                </button>
+                <button type="button" class="btn btn-warning" id="cancelTeacherCreate">
+                  Болдырмау
+                </button>
+              </div>
+              <div class="form-group {{deleteButtonShow}}">
+                <button type="button" class="btn btn-danger" id="deleteTeacherEdit">
+                  Жою
+                </button>
+              </div>
+            </form>
+          </div>
+          <button type="button" class="btn btn-primary {{createButtonShow}}" id="createNewTeacher">
+            <i class="fa fa-users"></i>
+            Жаңа мұғалімді тіркеу
+          </button>
+        {{/if}}
+      </div>
+
+      <br />
+      <table id="TeachersTable" class="table table-bordered table-hover">
+          <thead>
+              <tr>
+                  <th>Аты</th>
+                  <th>Жөні</th>
+                  <th>Топтар саны</th>
+                  <th>Оқушылар саны</th>
+              </tr>
+          </thead>
+          <tfoot>
+              <tr>
+                <th>Аты</th>
+                <th>Жөні</th>
+                <th>Топтар саны</th>
+                <th>Оқушылар саны</th>
+              </tr>
+          </tfoot>
+          <tbody>
+            {{#each Teachers}}
+              <tr class="dataRow" id="{{_id}}">
+                  <td>{{firstName}}</td>
+                  <td>{{lastName}}</td>
+                  <td>
+                    {{groups.length}}
+                  </td>
+                  <td>{{students.length}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+      </table>
+
+    </section>
+    <!-- /.content -->
+</template>

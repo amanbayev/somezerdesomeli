@@ -77,6 +77,8 @@ Template.branches.events({
     var BranchJSON = {};
     BranchJSON.name = sName;
     BranchJSON.address = sAddress;
+    t.find('#branchNameField').value = "";
+    t.find('#branchAddressField').value = "";
     if (Session.get('isEditingBranch')){
       var cBranch = Branchs.findOne({_id:Session.get('currentBranchId')});
       $("#"+cBranch._id).removeClass('warning');

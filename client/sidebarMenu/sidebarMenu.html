@@ -1,11 +1,14 @@
 <template name="sidebarMenu">
   <!-- Sidebar Menu -->
-  <ul class="sidebar-menu">
+  <ul class="sidebar-menu" min-height="900px">
     <li class="header">Zerdeli</li>
     <!-- Optionally, you can add icons to the links -->
     <li class="{{isActivePath '/'}}"><a href="/"><i class="fa fa-dashboard"></i> <span>Басқару панелі</span></a></li>
     <li class="{{isActivePath '/schools'}}"><a href="/schools"><i class="fa fa-institution"></i> <span>Мектептер</span></a></li>
     <li class="{{isActivePath '/branches'}}"><a href="/branches"><i class="fa fa-building-o"></i> <span>Филиалдар</span></a></li>
+    <li class="{{isActivePath '/subjects'}}"><a href="/subjects"><i class="fa fa-book"></i> <span>Пәндер</span></a></li>
+    <li class="{{isActivePath '/teachers'}}"><a href="/teachers"><i class="fa fa-users"></i> <span>Мұғалімдер</span></a></li>
+    <li class="{{isActivePath '/groups'}}"><a href="/groups"><i class="icon-group"></i><span>&nbsp;&nbsp;&nbsp;&nbsp;Топтар</span></a></li>
     <li class="treeview">
       <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span> <i class="fa fa-angle-left pull-right"></i></a>
       <ul class="treeview-menu">

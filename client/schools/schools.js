@@ -3,7 +3,7 @@ Template.schools.helpers({
     return Session.get('isCreatingSchool');
   },
   Schools: function(){
-    return Schools.find({});
+    return Schools.find({isActive:true});
   },
   hideOrNot: function(){
     if (Session.get('isCreatingSchool'))
@@ -74,6 +74,8 @@ Template.schools.events({
     var SchoolJSON = {};
     SchoolJSON.name = sName;
     SchoolJSON.address = sAddress;
+    t.find('#schoolNameField').value = "";
+    t.find('#schoolAddressField').value = "";
     if (Session.get('isEditingSchool')){
       var cSchool = Schools.findOne({_id:Session.get('currentSchoolId')});
       $("#"+cSchool._id).removeClass('warning');
