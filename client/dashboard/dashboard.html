@@ -1,0 +1,109 @@
+<template name="dashboard">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Басқарма панелі
+      <small>Келешекте осында есептер жинағы болады</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i>Басты бет</a></li>
+      <li class="active">Басқарма панелі</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+        <div class="info-box bg-blue">
+          <span class="info-box-icon">
+            <i class="fa fa-graduation-cap"></i>
+          </span>
+          <div class="info-box-content">
+            <span class="info-box-text">Оқушалар</span>
+            <span class="info-box-number"> 14 </span>
+            <div class="progress">
+              <div class="progress-bar" style="width: 100%"></div>
+            </div>
+            <span class="progress-description">
+              Оқушылар саны
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+        <div class="info-box bg-green">
+          <span class="info-box-icon">
+            <i class="fa fa-users"></i>
+          </span>
+          <div class="info-box-content">
+            <span class="info-box-text">Мұғалімдер</span>
+            <span class="info-box-number"> 14 </span>
+            <div class="progress">
+              <div class="progress-bar" style="width: 100%"></div>
+            </div>
+            <span class="progress-description">
+              Мұғалімдер саны
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+        <div class="info-box bg-yellow">
+          <span class="info-box-icon">
+            <i class="fa fa-institution"></i>
+          </span>
+          <div class="info-box-content">
+            <span class="info-box-text">Мектептер</span>
+            <span class="info-box-number"> {{SchoolsCount}} </span>
+            <div class="progress">
+              <div class="progress-bar" style="width: 100%"></div>
+            </div>
+            <span class="progress-description">
+              Мектептер саны
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+        <div class="info-box bg-red">
+          <span class="info-box-icon">
+            <i class="fa fa-book"></i>
+          </span>
+          <div class="info-box-content">
+            <span class="info-box-text">Пәндер</span>
+            <span class="info-box-number"> 14 </span>
+            <div class="progress">
+              <div class="progress-bar" style="width: 100%"></div>
+            </div>
+            <span class="progress-description">
+              Пәндер саны
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+        <div class="info-box bg-blue">
+          <span class="info-box-icon">
+            <i class="fa fa-building-o"></i>
+          </span>
+          <div class="info-box-content">
+            <span class="info-box-text">Филиалдар саны</span>
+            <span class="info-box-number"> {{BranchesCount}} </span>
+            <div class="progress">
+              <div class="progress-bar" style="width: 100%"></div>
+            </div>
+            <span class="progress-description">
+              Филиалдар саны
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /.content -->
+</template>

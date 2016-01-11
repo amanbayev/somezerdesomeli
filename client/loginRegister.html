@@ -1,0 +1,73 @@
+<template name="loginRegister">
+  <div class="container">
+    <div class="row">
+      <br />
+      <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div class="info-box">
+          <!-- Apply any bg-* class to to the icon to color it -->
+          <span class="info-box-icon bg-red"><i class="fa fa-lock"></i></span>
+          <div class="info-box-content">
+            <span class="info-box-text">Бұл портал қонақтарға жабық</span>
+            <span class="info-box-number">Порталға кіріңіз</span>
+          </div><!-- /.info-box-content -->
+        </div><!-- /.info-box -->
+      </div>
+      {{#if isRegisteringUser}}
+        <div class="col-xs-10 col-sm-4 col-xs-offset-1 col-sm-offset-4">
+          <form>
+            <div class="form-group">
+              <label for="nameFieldR">Атыңыз</label>
+              <input type="text" class="form-control" id="nameFieldR" placeholder="Талғат">
+            </div>
+            <div class="form-group">
+              <label for="lastNameFieldR">Тегіңіз</label>
+              <input type="text" class="form-control" id="lastNameFieldR" placeholder="Бегильдинов">
+            </div>
+            <div class="form-group">
+              <label for="pNameFieldR">Әкеңіздің аты</label>
+              <input type="text" class="form-control" id="pNameFieldR" placeholder="Ғарышұлы">
+            </div>
+            <div class="form-group">
+              <label for="loginFieldR">Email</label>
+              <input type="email" class="form-control" id="loginFieldR" placeholder="test@zerdeli.kz">
+            </div>
+            <div class="form-group">
+              <label for="passwordFieldR">Құпиясөз</label>
+              <input type="password" class="form-control" id="passwordFieldR" placeholder="********">
+            </div>
+            <div class="form-group">
+              <label for="passwordAgainFieldR">Құпиясөзді қайталаңыз</label>
+              <input type="password" class="form-control" id="passwordAgainFieldR" placeholder="********">
+            </div>
+            <div class="form-group">
+              <button class="btn btn-success btn-block" role="button" id="registerBtnR">Тіркелу</button>
+            </div>
+            <div class="form-group">
+              <button class="btn btn-danger btn-block" role="button" id="cancelBtnR">Болдырмау</button>
+            </div>
+          </form>
+        </div>
+      {{else}}
+        <div class="col-xs-10 col-sm-4 col-xs-offset-1 col-sm-offset-4">
+          <form>
+            <div class="form-group">
+              <label for="loginField">Email</label>
+              <input type="email" class="form-control" id="loginField" placeholder="test@zerdeli.kz">
+            </div>
+            <div class="form-group">
+              <label for="passwordField">Құпиясөз</label>
+              <input type="password" class="form-control" id="passwordField" placeholder="********">
+            </div>
+            <div class="form-group">
+              <button class="btn btn-success btn-block" role="button" id="loginBtn">Кіру</button>
+            </div>
+            <div class="form-group">
+              <button class="btn btn-info btn-block" role="button" id="signUpBtn">Тіркелу</button>
+            </div>
+          </form>
+        </div>
+      {{/if}}
+    </div>
+
+  </div>
+</template>

@@ -10,5 +10,13 @@ Router.configure({
 });
 
 Router.route('/', function(){
-  this.render('guest');
+  this.render('dashboard');
 });
+
+Router.route('/schools', function(){
+  this.render('schools');
+})
+
+Router.route('/branches', function(){
+  this.render('branches');
+})

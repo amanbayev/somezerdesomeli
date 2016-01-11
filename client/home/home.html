@@ -223,21 +223,7 @@
         </form>
         <!-- /.search form -->
 
-        <!-- Sidebar Menu -->
-        <ul class="sidebar-menu">
-          <li class="header">HEADER</li>
-          <!-- Optionally, you can add icons to the links -->
-          <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-          <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-          <li class="treeview">
-            <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span> <i class="fa fa-angle-left pull-right"></i></a>
-            <ul class="treeview-menu">
-              <li><a href="#">Link in level 2</a></li>
-              <li><a href="#">Link in level 2</a></li>
-            </ul>
-          </li>
-        </ul>
-        <!-- /.sidebar-menu -->
+        {{> sidebarMenu}}
       </section>
       <!-- /.sidebar -->
     </aside>
@@ -253,77 +239,6 @@
   </div>
   <!-- /.content-wrapper -->
   {{else}}
-    <div class="container">
-      <div class="row">
-        <br />
-        <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-          <div class="info-box">
-            <!-- Apply any bg-* class to to the icon to color it -->
-            <span class="info-box-icon bg-red"><i class="fa fa-lock"></i></span>
-            <div class="info-box-content">
-              <span class="info-box-text">Бұл портал қонақтарға жабық</span>
-              <span class="info-box-number">Порталға кіріңіз</span>
-            </div><!-- /.info-box-content -->
-          </div><!-- /.info-box -->
-        </div>
-        {{#if isRegisteringUser}}
-          <div class="col-xs-10 col-sm-4 col-xs-offset-1 col-sm-offset-4">
-            <form>
-              <div class="form-group">
-                <label for="nameFieldR">Атыңыз</label>
-                <input type="text" class="form-control" id="nameFieldR" placeholder="Талғат">
-              </div>
-              <div class="form-group">
-                <label for="lastNameFieldR">Тегіңіз</label>
-                <input type="text" class="form-control" id="lastNameFieldR" placeholder="Бегильдинов">
-              </div>
-              <div class="form-group">
-                <label for="pNameFieldR">Әкеңіздің аты</label>
-                <input type="text" class="form-control" id="pNameFieldR" placeholder="Ғарышұлы">
-              </div>
-              <div class="form-group">
-                <label for="loginFieldR">Email</label>
-                <input type="email" class="form-control" id="loginFieldR" placeholder="test@zerdeli.kz">
-              </div>
-              <div class="form-group">
-                <label for="passwordFieldR">Құпиясөз</label>
-                <input type="password" class="form-control" id="passwordFieldR" placeholder="********">
-              </div>
-              <div class="form-group">
-                <label for="passwordAgainFieldR">Құпиясөзді қайталаңыз</label>
-                <input type="password" class="form-control" id="passwordAgainFieldR" placeholder="********">
-              </div>
-              <div class="form-group">
-                <button class="btn btn-success btn-block" role="button" id="registerBtnR">Тіркелу</button>
-              </div>
-              <div class="form-group">
-                <button class="btn btn-danger btn-block" role="button" id="cancelBtnR">Болдырмау</button>
-              </div>
-            </form>
-          </div>
-        {{else}}
-          <div class="col-xs-10 col-sm-4 col-xs-offset-1 col-sm-offset-4">
-            <form>
-              <div class="form-group">
-                <label for="loginField">Email</label>
-                <input type="email" class="form-control" id="loginField" placeholder="test@zerdeli.kz">
-              </div>
-              <div class="form-group">
-                <label for="passwordField">Құпиясөз</label>
-                <input type="password" class="form-control" id="passwordField" placeholder="********">
-              </div>
-              <div class="form-group">
-                <button class="btn btn-success btn-block" role="button" id="loginBtn">Кіру</button>
-              </div>
-              <div class="form-group">
-                <button class="btn btn-info btn-block" role="button" id="signUpBtn">Тіркелу</button>
-              </div>
-            </form>
-          </div>
-        {{/if}}
-      </div>
-
-    </div>
-
+    {{> loginRegister}}
   {{/if}}
 </template>
