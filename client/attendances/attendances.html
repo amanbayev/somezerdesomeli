@@ -1,16 +1,17 @@
-<template name="students">
+<template name="attendances">
   <section class="content-header">
     <h1>
-      <i class="fa fa-graduation-cap"></i>Оқушылар
+      <i class="fa fa-pencil-square-o"></i>&nbsp;Келушілер журналы
       <small>Тіркеу немесе тізімін көру</small>
     </h1>
     <ol class="breadcrumb">
       <li><a href="/"><i class="fa fa-dashboard"></i>Басты бет</a></li>
-      <li class="active"><i class="fa fa-graduation-cap"></i>Оқушылар</li>
+      <li class="active"><i class="fa fa-pencil-square-o"></i>&nbsp;Келушілер журналы</li>
     </ol>
   </section>
   <section class="content">
     <div>
+
       {{#if isInRole 'admin'}}
         <div class="{{hideOrNot}}">
           <form id="createStudentForm">
@@ -153,39 +154,36 @@
     </div>
     <br />
     <div class="box">
-      <table id="StudentsTable" class="table table-bordered table-hover">
+      <table id="AttendancesTable" class="table table-bordered table-hover">
           <thead>
               <tr>
-                <th>Аты</th>
-                <th>Тегі</th>
-                <th>Әкесінің аты</th>
-                <th>Ұялы телефоны</th>
-                <th>Топтары</th>
+                <th>#</th>
+                <th>Күні</th>
+                <th>Тобы</th>
+                <th>Оқушылар саны</th>
+                <th>Келмеген саны</th>
+                <th>Тексеруші</th>
               </tr>
           </thead>
           <tfoot>
               <tr>
-                <th>Аты</th>
-                <th>Тегі</th>
-                <th>Әкесінің аты</th>
-                <th>Ұялы телефоны</th>
-                <th>Топтары</th>
+                <th>#</th>
+                <th>Күні</th>
+                <th>Тобы</th>
+                <th>Оқушылар саны</th>
+                <th>Келмеген саны</th>
+                <th>Тексеруші</th>
               </tr>
           </tfoot>
           <tbody>
-            {{#each Students}}
+            {{#each Attendances}}
               <tr class="dataRow" id="{{_id}}">
-                  <td>{{firstName}}</td>
-                  <td>{{lastName}}</td>
-                  <td>{{patronimicName}}</td>
-                  <td>{{mobile}}</td>
-                  <td>
-                    {{#each groups}}
-                      <span class="label label-default">
-                        {{getGroupNameById this}}
-                      </span>
-                    {{/each}}
-                  </td>
+                <td>{{@index}}</td>
+                <td>{{getDate date}}</td>
+                <td>{{getGroupNameById group}}</td>
+                <td>{{studentsCount}}</td>
+                <td>{{missingStudentsCount}}</td>
+                <td>{{getUserById author}}</td>
               </tr>
             {{/each}}
           </tbody>

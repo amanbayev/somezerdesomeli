@@ -5,6 +5,12 @@ Template.students.helpers({
   Groups: function(){
     return Groups.find({isActive:true});
   },
+  totalStudentsCount: function(){
+    return Students.find({isActive:true}).length;
+  },
+  Students: function(){
+    return Students.find({isActive:true});
+  },
   hideOrNot: function(){
     if (Session.get('isCreatingStudent'))
       {
@@ -62,7 +68,7 @@ Template.students.helpers({
 Template.students.events({
   "click #createNewStudent": function(e, t){
      e.preventDefault();
-     if ('isEditingStudent') {
+     if (Session.get('isEditingStudent')) {
        $('#'+Session.get('currentStudentId')).removeClass('warning');
        Session.set('isEditingStudent', false);
      }
@@ -132,6 +138,82 @@ Template.students.events({
     var discount = t.find('#studentDiscountField').value;
     var school = t.find('#studentSchoolSelect').value;
     var groups = Session.get('thisStudentGroups');
-
+    var StudentJSON = {};
+    StudentJSON.firstName = fName;
+    StudentJSON.lastName = lName;
+    StudentJSON.patronimicName = pName;
+    StudentJSON.mobile = mobile;
+    StudentJSON.branch = branch;
+    StudentJSON.discount = discount;
+    StudentJSON.school = school;
+    StudentJSON.groups = groups;
+    if (Session.get('isEditingStudent')){
+      var cStudent = Students.findOne({_id: Session.get('currentStudentId')});
+      StudentJSON.isActive = cStudent.isActive;
+      StudentJSON.attendances = cStudent.attendances;
+      if (StudentJSON.attendances === undefined)
+        StudentJSON.attendances = [];
+      StudentJSON.createdAt = cStudent.createdAt;
+      StudentJSON.createdBy = cStudent.createdBy;
+      var originalStudentGroups = Session.get('originalStudentGroups');
+      var removedGroups = [];
+      originalStudentGroups.forEach(function(gId, ind){
+        var add = true;
+        groups.forEach(function(ngId, nind){
+          if (gId === ngId)
+            add=false;
+        })
+        if (add)
+          removedGroups.push(gId);
+      });
+      Meteor.call('editStudent',
+        cStudent._id,
+        StudentJSON,
+        removedGroups,
+        function(error){
+          if (error) console.log('error: '+error.reason);
+          else {
+            toastr.success(fName+' '+lName+' оқушы өзгерістері сақталды');
+            Session.set('currentStudentId', undefined);
+            Session.set('isCreatingStudent',false);
+            Session.set('isEditingStudent',false);
+            Session.set('originalStudentGroups', []);
+            $('#'+cStudent._id).removeClass('warning');
+          }
+        }
+      );
+    } else {
+      Meteor.call('addStudent', StudentJSON, function(error){
+        if (error)
+          console.log(error.reason);
+        else
+        {
+          toastr.success(fName+' '+lName+' оқушы тіркелді');
+          Session.set('isCreatingStudent', false);
+        }
+      });
+    }
+  },
+  "click .dataRow": function (e,t){
+    e.preventDefault();
+    $('#createStudentForm').removeClass('animated bounceOutLeft');
+    $('#createStudentForm').addClass('animated bounceInLeft');
+    if (Session.get('isEditingStudent')) {
+      $('#'+Session.get('currentStudentId')).removeClass('warning');
+      Session.set('isEditingStudent', false);
+    }
+    Session.set('isCreatingStudent',true);
+    Session.set('isEditingStudent',true);
+    var sId = $(e.currentTarget).attr('id');
+    Session.set('currentStudentId', sId);
+    var cStudent = Students.findOne({_id: sId});
+    t.find('#studentFirstNameField').value = cStudent.firstName;
+    t.find('#studentLastName').value = cStudent.lastName;
+    t.find('#studentPatronimicName').value = cStudent.patronimicName;
+    t.find('#studentMobileField').value = cStudent.mobile;
+    t.find('#studentDiscountField').value = cStudent.discount;
+    Session.set('thisStudentGroups', cStudent.groups);
+    Session.set('originalStudentGroups', cStudent.groups);
+    e.currentTarget.classList.add('warning');
   }
 });

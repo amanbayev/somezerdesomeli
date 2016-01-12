@@ -36,3 +36,7 @@ Router.route('/groups', function(){
 Router.route('/students', function(){
   this.render('students');
 })
+
+Router.route('/attendances', function(){
+  this.render('attendances');
+})

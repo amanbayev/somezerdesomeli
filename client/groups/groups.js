@@ -80,7 +80,7 @@ Template.groups.helpers({
 Template.groups.events({
   "click .dataRow": function(e,t){
     // e.preventDefault();
-    if ('isEditingGroup') {
+    if (Session.get('isEditingGroup')) {
       $('#'+Session.get('currentGroupId')).removeClass('warning');
       Session.set('isEditingGroup', false);
     }
