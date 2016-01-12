@@ -32,3 +32,7 @@ Router.route('/teachers', function(){
 Router.route('/groups', function(){
   this.render('groups');
 })
+
+Router.route('/students', function(){
+  this.render('students');
+})

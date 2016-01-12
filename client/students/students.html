@@ -1,0 +1,161 @@
+<template name="students">
+  <section class="content-header">
+    <h1>
+      <i class="fa fa-graduation-cap"></i>Оқушылар
+      <small>Тіркеу немесе тізімін көру</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="/"><i class="fa fa-dashboard"></i>Басты бет</a></li>
+      <li class="active"><i class="fa fa-graduation-cap"></i>Оқушылар</li>
+    </ol>
+  </section>
+  <section class="content">
+    <div>
+      {{#if isInRole 'admin'}}
+        <div class="{{hideOrNot}}">
+          <form>
+            <div class="row">
+              <div class="form-group col-xs-12 col-sm-6 col-md-4">
+                <label for="studentFirstNameField">Аты</label>
+                <div class="input-group">
+                  <input class="form-control" type="text" placeholder="Аты" id="studentFirstNameField">
+                  <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                </div>
+              </div>
+              <div class="form-group col-xs-12 col-sm-6 col-md-4">
+                <label for="studentLastName">Тегі</label>
+                <div class="input-group">
+                  <input class="form-control" type="text" placeholder="Тегі" id="studentLastName">
+                  <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                </div>
+              </div>
+              <div class="form-group col-xs-12 col-sm-6 col-md-4">
+                <label for="studentPatronimicName">Әкесінің аты</label>
+                <div class="input-group">
+                  <input class="form-control" type="text" placeholder="Әкесінің аты" id="studentPatronimicName">
+                  <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form group col-xs-6">
+                <label for="studentMobileField">Ұялы телефоны</label>
+                <div class="input-group">
+                  <input class="form-control" type="tel" placeholder="+7 701 XXX XX XX" id="studentMobileField">
+                  <div class="input-group-addon"><i class="fa fa-phone"></i></div>
+                </div>
+              </div>
+              <div class="form-group col-xs-6">
+                <label for="studentBranchField">Филиал</label>
+                <div class="input-group">
+                  <select class="form-control" id="studentBranchField">
+                    {{#each Branches}}
+                      <option value="{{_id}}">{{name}}</option>
+                    {{/each}}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group">
+                <div class="col-xs-12 col-sm-6">
+                  <label for="studentGroupSelect">Топтын пәнің таңданыз:</label>
+                  <div class="input-group ">
+                    <select id="studentGroupSelect" class="form-control">
+                      {{#each Groups}}
+                        <option value="{{_id}}">{{name}}</option>
+                      {{/each}}
+                    </select>
+                  </div>
+                </div>
+                <div class="col-xs-12  col-sm-6">
+                  <label>&nbsp;</label>
+                  <div class="input-group">
+                    <button class="btn btn-info" type="button" id="addGroupToStudent">Оқушыны топқа қосу</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br />
+            <div class="row">
+              <div class="form-group col-xs-12 col-sm-12 col-md-6">
+                  <div class="box box-default">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">Оқушының топтары:</h3>
+                      <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                      </div><!-- /.box-tools -->
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                      {{#each studentGroups}}
+                        <button id="{{this}}" class="removeGroupFromStudent btn btn-primary" style="margin-bottom: 10px;">
+                          {{getGroupById this}} &nbsp;&nbsp;<i class="fa fa-trash-o"></i>
+                        </button>&nbsp;&nbsp;&nbsp;&nbsp;
+                      {{/each}}
+                    </div><!-- /.box-body -->
+                  </div><!-- /.box -->
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12">
+                  <button type="button" class="btn btn-success" id="saveStudent">
+                    Сақтау
+                  </button>
+                  <button type="button" class="btn btn-warning" id="cancelStudent">
+                    Болдырмау
+                  </button>
+                  <button type="button" class="{{deleteButtonShow}} btn btn-danger" id="deleteStudent">
+                    Жою
+                  </button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <button type="button" class="btn btn-primary {{createButtonShow}}" id="createNewStudent">
+          <i class="fa fa-graduation-cap"></i>
+          Жаңа оқушыны   тіркеу
+        </button>
+      {{/if}}
+    </div>
+    <br />
+    <div class="box">
+      <table id="StudentsTable" class="table table-bordered table-hover">
+          <thead>
+              <tr>
+                <th>Аты</th>
+                <th>Тегі</th>
+                <th>Әкесінің аты</th>
+                <th>Мұғалімдері</th>
+                <th>Топтары саны</th>
+              </tr>
+          </thead>
+          <tfoot>
+              <tr>
+                <th>Аты</th>
+                <th>Тегі</th>
+                <th>Әкесінің аты</th>
+                <th>Мұғалімдері</th>
+                <th>Топтары саны</th>
+              </tr>
+          </tfoot>
+          <tbody>
+            {{#each Students}}
+              <tr class="dataRow" id="{{_id}}">
+                  <td>{{firstName}}</td>
+                  <td>{{lastName}}</td>
+                  <td>{{patronimicName}}</td>
+                  <td>{{#each getTeachers teachers}}
+                      <span class="label label-default">{{this}}</span>
+                    {{/each}}
+                  </td>
+                  <td>{{#each getTeachers teachers}}
+                      <span class="label label-default">{{this}}</span>
+                    {{/each}}
+                  </td>
+              </tr>
+            {{/each}}
+          </tbody>
+      </table>
+    </div>
+  </section>
+</template>

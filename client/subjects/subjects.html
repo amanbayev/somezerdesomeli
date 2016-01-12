@@ -44,32 +44,36 @@
     </div>
 
     <br />
-    <table id="SubjectsTable" class="table table-bordered table-hover">
-        <thead>
-            <tr>
+    <div class="box">
+      <div class="box-header">
+        <h3 class="box-title">Пәндер тізімі</h3>
+      </div>
+      <table id="SubjectsTable" class="table table-bordered table-hover">
+          <thead>
+              <tr>
+                  <th>Аталуы</th>
+                  <th>Мұғалімдер саны</th>
+                  <th>Оқушылар саны</th>
+              </tr>
+          </thead>
+          <tfoot>
+              <tr>
                 <th>Аталуы</th>
                 <th>Мұғалімдер саны</th>
                 <th>Оқушылар саны</th>
-            </tr>
-        </thead>
-        <tfoot>
-            <tr>
-              <th>Аталуы</th>
-              <th>Мұғалімдер саны</th>
-              <th>Оқушылар саны</th>
-            </tr>
-        </tfoot>
-        <tbody>
-          {{#each Subjects}}
-            <tr class="dataRow" id="{{_id}}">
-                <td>{{name}}</td>
-                <td>{{teachers.length}}</td>
-                <td>{{students.length}}</td>
-            </tr>
-          {{/each}}
-        </tbody>
-    </table>
-
+              </tr>
+          </tfoot>
+          <tbody>
+            {{#each Subjects}}
+              <tr class="dataRow" id="{{_id}}">
+                  <td>{{name}}</td>
+                  <td>{{teachers.length}}</td>
+                  <td>{{students.length}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+      </table>
+    </div>
   </section>
   <!-- /.content -->
 

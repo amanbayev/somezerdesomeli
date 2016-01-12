@@ -1,4 +1,12 @@
 Template.teachers.helpers({
+  teacherGroupsCount: function(gArr){
+    var counter = 0;
+    gArr.forEach(function(o,i){
+      var tG = Groups.findOne({_id:o, isActive:true});
+      if (tG) counter++;
+    });
+    return counter;
+  },
   Subjects: function(){
     return Subjects.find({isActive:true});
   },
@@ -67,6 +75,10 @@ Template.teachers.events({
     Session.set('isEditingTeacher', false);
   },
   "click .dataRow": function(e,t){
+    if ('isEditingTeacher') {
+      $('#'+Session.get('currentTeacherId')).removeClass('warning');
+      Session.set('isEditingTeacher', false);
+    }
     var rowId = $(e.currentTarget).attr('id');
     Session.set('currentTeacherId', rowId);
     Session.set('isCreatingTeacher', true);

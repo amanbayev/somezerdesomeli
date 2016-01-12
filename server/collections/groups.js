@@ -13,24 +13,78 @@ Meteor.methods({
     GroupJSON.createdAt = new Date();
     GroupJSON.isActive = true;
     GroupJSON.students = [];
-    return Groups.insert(GroupJSON);
+    var gId = Groups.insert(GroupJSON);
+    var teachers = GroupJSON.teachers;
+    teachers.forEach(function(teacherObj,i){
+      var add = true;
+      var cTeacher = Teachers.findOne({_id:teacherObj});
+      var groupIds = cTeacher.groups;
+      groupIds.forEach(function(guid, ind){
+        if (guid === gId)
+          add = false;
+      });
+      if (add) {
+        groupIds.push(gId);
+        Teachers.update({_id: cTeacher._id},
+          {$set:{
+            groups: groupIds
+        }});
+      }
+    });
+    return gId;
   },
-  editGroup: function(GroupId, GroupJSON){
+  editGroup: function(GroupId, GroupJSON, removedTeachers){
     Groups.update(
       {_id:GroupId},
       {
         $set:
         {
           name : GroupJSON.name,
-          address : GroupJSON.address,
+          price : GroupJSON.price,
+          subject : GroupJSON.subject,
+          branch : GroupJSON.branch,
+          teachers : GroupJSON.teachers,
+          attendances : GroupJSON.attendances,
           isActive: GroupJSON.isActive,
           students: GroupJSON.students,
           updatedAt: new Date(),
           updatedBy: this.userId
         }
       });
+    var gId = GroupId;
+    var teachers = GroupJSON.teachers;
+    teachers.forEach(function(teacherObj,i){
+      var add = true;
+      var cTeacher = Teachers.findOne({_id:teacherObj});
+      var groupIds = cTeacher.groups;
+      groupIds.forEach(function(guid, ind){
+        if (guid === gId)
+          add = false;
+      });
+      if (add) {
+        groupIds.push(gId);
+        Teachers.update({_id: cTeacher._id},
+          {$set:{
+            groups: groupIds
+        }});
+      }
+    });
+    removedTeachers.forEach(function(o,i){
+      var cTeacher = Teachers.findOne({_id:o});
+      var groupIds = cTeacher.groups;
+      groupIds.forEach(function(grId, ind){
+        if (grId === gId) {
+          groupIds.splice(ind, 1);
+        }
+      });
+      Teachers.update({_id:cTeacher._id}, {$set:{
+        groups: groupIds
+      }});
+    });
   },
   getGroupsCount: function(){
-    return Groups.find({isActive:true}).count();
+    // console.log(Groups.find({isActive:true}).count());
+    var count = Groups.find({isActive:true}).count();
+    return count;
   }
 });

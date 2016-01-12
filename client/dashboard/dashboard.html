@@ -15,21 +15,23 @@
   <section class="content">
     <div class="row">
       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-        <div class="info-box bg-blue">
-          <span class="info-box-icon">
-            <i class="fa fa-graduation-cap"></i>
-          </span>
-          <div class="info-box-content">
-            <span class="info-box-text">Оқушалар</span>
-            <span class="info-box-number"> 14 </span>
-            <div class="progress">
-              <div class="progress-bar" style="width: 100%"></div>
-            </div>
-            <span class="progress-description">
-              Оқушылар саны
+        <a href="/students">
+          <div class="info-box bg-blue">
+            <span class="info-box-icon">
+              <i class="fa fa-graduation-cap"></i>
             </span>
+            <div class="info-box-content">
+              <span class="info-box-text">Оқушалар</span>
+              <span class="info-box-number"> {{StudentsCount}} </span>
+              <div class="progress">
+                <div class="progress-bar" style="width: 100%"></div>
+              </div>
+              <span class="progress-description">
+                Оқушылар саны
+              </span>
+            </div>
           </div>
-        </div>
+        </a>
       </div>
 
       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
@@ -120,7 +122,7 @@
             </span>
             <div class="info-box-content">
               <span class="info-box-text">Топтар</span>
-              <span class="info-box-number"> {{GroupsCount}} </span>
+              <span class="info-box-number"> {{GroupsCountNew}} </span>
               <div class="progress">
                 <div class="progress-bar" style="width: 100%"></div>
               </div>

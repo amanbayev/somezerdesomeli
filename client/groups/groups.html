@@ -15,14 +15,36 @@
       {{#if isInRole 'admin'}}
         <div class="{{hideOrNot}}">
           <form>
-            <div class="form-group">
-              <div class="input-group">
-                <input class="form-control" type="text" placeholder="Топтың аты" id="GroupNameField">
-                <div class="input-group-addon"><i class="icon-group"></i></div>
+            <div class="row">
+              <div class="form-group col-xs-12 col-sm-6">
+                <label for="GroupNameField">Топтың аты</label>
+                <div class="input-group">
+                  <input class="form-control" type="text" placeholder="Топтың аты" id="GroupNameField">
+                  <div class="input-group-addon"><i class="icon-group"></i></div>
+                </div>
               </div>
             </div>
             <div class="row">
-              <div class="form-group col-xs-6 col-sm-6 col-md-3">
+              <div class="form-group col-xs-6 col-sm-3 col-md-4">
+                <label for="GroupPrice">Бағасы</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" placeholder="15000" id="GroupPrice" min="0">
+                  <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
+                </div>
+              </div>
+              <div class="form-group col-xs-6 col-sm-3 col-md-4">
+                <div class="input-group">
+                  <label for="GroupBranch">Филиал</label>
+                  <select class="form-control" id="GroupBranch">
+                    {{#each Branches}}
+                      <option value="{{_id}}">{{name}}</option>
+                    {{/each}}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-xs-12 col-sm-6 col-md-4">
                 <div class="input-group">
                   <label for="GroupSubjectsSelect">Топтын пәнің таңданыз:</label>
                   <select id="GroupSubjectsSelect" class="form-control" width="40%">
@@ -34,20 +56,28 @@
               </div>
             </div>
             <div class="row">
-                  <div class="form-group col-xs-12 col-sm-6 col-md-3">
+              <div class="form-group">
+                  <div class="col-xs-12 col-sm-6 col-md-3">
                     <div class="input-group">
-                      <select id="GroupTeachersSelect" class="form-control" width="40%">
+                      <select id="GroupTeachersSelect" class="form-control">
                         {{#each Teachers}}
                           <option>{{firstName}} {{lastName}}</option>
                         {{/each}}
                       </select>
                     </div>
                   </div>
-                  <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                  <div class="visible-xs-block">
+                    <br /><br />
+                  </div>
+                  <div class="col-xs-12 col-sm-6 col-md-3">
                     <div class="input-group">
-                      <button class="btn btn-default" type="button" id="addTeacherToGroup">Мұғалімді топқа қосу</button>
+                      <button class="btn btn-info" type="button" id="addTeacherToGroup">Мұғалімді топқа қосу</button>
                     </div>
                   </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
                   <div class="form-group col-xs-12 col-sm-12 col-md-6">
                       <div class="box box-default">
                         <div class="box-header with-border">
@@ -58,14 +88,12 @@
                         </div><!-- /.box-header -->
                         <div class="box-body">
                           {{#each groupTeachers}}
-                            <h3>
-                              <span class="label label-info">
-                                {{getTeacherById this}}
-                              </span>
-                              <button id="{{this}}" class="removeTeacherFromGroup btn btn-danger">
-                                <i class="fa fa-trash-o"></i>
-                              </button>
-                            </h3>
+
+                              <button id="{{this}}" class="removeTeacherFromGroup btn btn-primary" style="margin-bottom: 10px;">
+                                {{getTeacherById this}} &nbsp;&nbsp;<i class="fa fa-trash-o"></i>
+                              </button>&nbsp;&nbsp;&nbsp;&nbsp;
+
+
                           {{/each}}
                         </div><!-- /.box-body -->
                       </div><!-- /.box -->
@@ -94,32 +122,36 @@
     </div>
 
     <br />
-    <table id="GroupsTable" class="table table-bordered table-hover">
-        <thead>
-            <tr>
-              <th>Аты</th>
-              <th>Мұғалімдері</th>
-              <th>Оқушылар саны</th>
-            </tr>
-        </thead>
-        <tfoot>
-            <tr>
-              <th>Аты</th>
-              <th>Мұғалімдері</th>
-              <th>Оқушылар саны</th>
-            </tr>
-        </tfoot>
-        <tbody>
-          {{#each Groups}}
-            <tr class="dataRow" id="{{_id}}">
-                <td>{{name}}</td>
-                <td>{{getTeachers teachers}}</td>
-                <td>{{students.length}}</td>
-            </tr>
-          {{/each}}
-        </tbody>
-    </table>
-
+    <div class="box">
+      <table id="GroupsTable" class="table table-bordered table-hover">
+          <thead>
+              <tr>
+                <th>Аты</th>
+                <th>Мұғалімдері</th>
+                <th>Оқушылар саны</th>
+              </tr>
+          </thead>
+          <tfoot>
+              <tr>
+                <th>Аты</th>
+                <th>Мұғалімдері</th>
+                <th>Оқушылар саны</th>
+              </tr>
+          </tfoot>
+          <tbody>
+            {{#each Groups}}
+              <tr class="dataRow" id="{{_id}}">
+                  <td>{{name}}</td>
+                  <td>{{#each getTeachers teachers}}
+                      <span class="label label-default">{{this}}</span>
+                    {{/each}}
+                  </td>
+                  <td>{{students.length}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+      </table>
+    </div>
   </section>
   <!-- /.content -->
 </template>

@@ -45,6 +45,10 @@ Template.schools.events({
     Session.set('isEditingSchool', false);
   },
   "click .dataRow": function(e,t){
+    if ('isEditingSchool') {
+      $('#'+Session.get('currentSchoolId')).removeClass('warning');
+      Session.set('isEditingSchool', false);
+    }
     var rowId = $(e.currentTarget).attr('id');
     Session.set('currentSchoolId', rowId);
     Session.set('isCreatingSchool', true);

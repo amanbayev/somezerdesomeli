@@ -26,10 +26,14 @@ Template.dashboard.helpers({
     });
     return Session.get('subjectsCount');
   },
-  GroupsCount: function(){
-    Meteor.call('getGroupsCount', function(c,t){
-      Session.set('groupsCount', c);
+  GroupsCountNew: function(){
+    Meteor.call('getGroupsCount', function(e,c){
+      Session.set('GroupsCountNew', c);
     });
-    return Session.get('groupsCount');
+    return Session.get('GroupsCountNew');
+  },
+  StudentsCount: function(){
+    //
+    return Session.get('studentsCount');
   }
 });

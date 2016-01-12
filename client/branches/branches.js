@@ -48,6 +48,10 @@ Template.branches.events({
     Session.set('isEditingBranch', false);
   },
   "click .dataRow": function(e,t){
+    if (Session.get('isEditingBranch')){
+      var cBranch = Branches.findOne({_id:Session.get('currentBranchId')});
+      $("#"+cBranch._id).removeClass('warning');
+    }
     var rowId = $(e.currentTarget).attr('id');
     Session.set('currentBranchId', rowId);
     Session.set('isCreatingBranch', true);
@@ -80,7 +84,7 @@ Template.branches.events({
     t.find('#branchNameField').value = "";
     t.find('#branchAddressField').value = "";
     if (Session.get('isEditingBranch')){
-      var cBranch = Branchs.findOne({_id:Session.get('currentBranchId')});
+      var cBranch = Branches.findOne({_id:Session.get('currentBranchId')});
       $("#"+cBranch._id).removeClass('warning');
       BranchJSON.students = cBranch.students;
       BranchJSON.isActive = cBranch.isActive;

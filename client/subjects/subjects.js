@@ -45,6 +45,10 @@ Template.subjects.events({
     Session.set('isEditingSubject', false);
   },
   "click .dataRow": function(e,t){
+    if (Session.get('isEditingSubject')){
+      var cSubject = Subjects.findOne({_id:Session.get('currentSubjectId')});
+      $("#"+cSubject._id).removeClass('warning');
+    }
     var rowId = $(e.currentTarget).attr('id');
     Session.set('currentSubjectId', rowId);
     Session.set('isCreatingSubject', true);

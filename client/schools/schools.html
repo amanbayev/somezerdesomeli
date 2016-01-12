@@ -29,7 +29,7 @@
               </div>
             </div>
             <div class="form-group">
-              <button type="button" class="btn btn-success" id="saveSchoolCreate">
+              <button type="submit" class="btn btn-success" id="saveSchoolCreate">
                 Сақтау
               </button>
               <button type="button" class="btn btn-warning" id="cancelSchoolCreate">
@@ -50,32 +50,36 @@
     </div>
 
     <br />
-    <table id="schoolsTable" class="table table-bordered table-hover">
-        <thead>
-            <tr>
+    <div class="box">
+      <div class="box-header">
+        <h3 class="box-title">Мектептер тізімі</h3>
+      </div>
+      <table id="schoolsTable" class="table table-bordered table-hover">
+          <thead>
+              <tr>
+                  <th>Аты</th>
+                  <th>Мекенжайы</th>
+                  <th>Оқушылар саны</th>
+              </tr>
+          </thead>
+          <tfoot>
+              <tr>
                 <th>Аты</th>
                 <th>Мекенжайы</th>
                 <th>Оқушылар саны</th>
-            </tr>
-        </thead>
-        <tfoot>
-            <tr>
-              <th>Аты</th>
-              <th>Мекенжайы</th>
-              <th>Оқушылар саны</th>
-            </tr>
-        </tfoot>
-        <tbody>
-          {{#each Schools}}
-            <tr class="dataRow" id="{{_id}}">
-                <td>{{name}}</td>
-                <td>{{address}}</td>
-                <td>{{students.length}}</td>
-            </tr>
-          {{/each}}
-        </tbody>
-    </table>
-
+              </tr>
+          </tfoot>
+          <tbody>
+            {{#each Schools}}
+              <tr class="dataRow" id="{{_id}}">
+                  <td>{{name}}</td>
+                  <td>{{address}}</td>
+                  <td>{{students.length}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+      </table>
+    </div>
   </section>
   <!-- /.content -->
 </template>
