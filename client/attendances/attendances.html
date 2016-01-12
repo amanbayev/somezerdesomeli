@@ -14,130 +14,31 @@
 
       {{#if isInRole 'admin'}}
         <div class="{{hideOrNot}}">
-          <form id="createStudentForm">
+          <form id="createAttendanceForm">
             <div class="row">
               <div class="form-group col-xs-12 col-sm-4 col-md-4">
-                <label for="studentFirstNameField">Аты</label>
+                <label for="attendanceDateField">Күнді таңданыз:</label>
                 <div class="input-group">
-                  <input class="form-control" type="text" placeholder="Аты" id="studentFirstNameField">
+                  <input class="form-control" type="text" id="attendanceDateField">
                   <div class="input-group-addon"><i class="fa fa-user"></i></div>
                 </div>
-              </div>
-              <div class="form-group col-xs-6 col-sm-4 col-md-4">
-                <label for="studentLastName">Тегі</label>
-                <div class="input-group">
-                  <input class="form-control" type="text" placeholder="Тегі" id="studentLastName">
-                  <div class="input-group-addon"><i class="fa fa-user"></i></div>
-                </div>
-              </div>
-              <div class="form-group col-xs-6 col-sm-4 col-md-4">
-                <label for="studentPatronimicName">Әкесінің аты</label>
-                <div class="input-group">
-                  <input class="form-control" type="text" placeholder="Әкесінің аты" id="studentPatronimicName">
-                  <div class="input-group-addon"><i class="fa fa-user"></i></div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="form group col-xs-12 col-md-6">
-                <label for="studentMobileField">Ұялы телефоны</label>
-                <div class="input-group">
-                  <input class="form-control" type="tel" placeholder="+7 701 XXX XX XX" id="studentMobileField">
-                  <div class="input-group-addon"><i class="fa fa-phone"></i></div>
-                </div>
-              </div>
-              <div class="form-group col-xs-12 col-md-6">
-                <label for="studentBranchField">Филиал</label>
-                <div class="input-group">
-                  <select class="form-control" id="studentBranchField">
-                    {{#each Branches}}
-                      <option value="{{_id}}">{{name}}</option>
-                    {{/each}}
-                  </select>
-                  <div class="input-group-addon"><i class="fa fa-building"></i></div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="form-group col-xs-12 col-md-6">
-                <label>Оқушының мектебі:</label>
-                <div class="input-group">
-                  <select class="form-control" id="studentSchoolSelect">
-                    {{#each Schools}}
-                      <option value="{{_id}}">{{name}}</option>
-                    {{/each}}
-                  </select>
-                  <div class="input-group-addon"><i class="fa fa-institution"></i></div>
-                </div>
-              </div>
-              <div class="form-group col-xs-12 col-md-6">
-                <label>Жеңілдіктер:</label>
-                <div class="input-group">
-                  <input type="number" min="0" max="100" value="0" class="form-control" id="studentDiscountField">
-                  <div class="input-group-addon"><i class="fa fa-percent"></i></div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="form-group">
-                <div class="col-xs-12 col-md-6">
-                  <label for="studentGroupSelect">Топтын пәнің таңданыз:</label>
-                  <div class="input-group ">
-                    <select id="studentGroupSelect" class="form-control">
-                      {{#each Groups}}
-                        <option value="{{_id}}">{{getGroupById _id}}</option>
-                      {{/each}}
-                    </select>
-                    <div class="input-group-addon"><i class="fa fa-book"></i></div>
-                  </div>
-                </div>
-                <div class="col-xs-12 col-md-6">
-                  <label>&nbsp;</label>
-                  <div class="input-group">
-                    <button class="btn btn-info" type="button" id="addGroupToStudent">
-                      Оқушыны топқа қосу
-                      &nbsp;&nbsp;
-                      <i class="fa fa-plus"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="row">
-              <div class="form-group col-xs-12 col-sm-12 col-md-6">
-                  <div class="box box-default">
-                    <div class="box-header with-border">
-                      <h3 class="box-title">Оқушының топтары:</h3>
-                      <div class="box-tools pull-right">
-                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                      </div><!-- /.box-tools -->
-                    </div><!-- /.box-header -->
-                    <div class="box-body">
-                      {{#each studentGroups}}
-                        <button id="{{this}}" class="removeGroupFromStudent btn btn-primary" style="margin-bottom: 10px;">
-                          {{getGroupNameById this}} &nbsp;&nbsp;<i class="fa fa-trash-o"></i>
-                        </button>&nbsp;&nbsp;&nbsp;&nbsp;
-                      {{/each}}
-                    </div><!-- /.box-body -->
-                  </div><!-- /.box -->
               </div>
             </div>
             <div class="row">
               <div class="col-xs-6">
-                <button type="button" class="btn btn-success" id="saveStudent">
+                <button type="button" class="btn btn-success" id="saveAttendance">
                   Сақтау
                   &nbsp;&nbsp;
                   <i class="fa fa-save"></i>
                 </button>
-                <button type="button" class="btn btn-warning" id="cancelStudent">
+                <button type="button" class="btn btn-warning" id="cancelAttendance">
                   Болдырмау
                   &nbsp;&nbsp;
                   <i class="fa fa-rotate-left"></i>
                 </button>
               </div>
               <div class="col-xs-6">
-                <button type="button" class="btn btn-danger {{deleteButtonShow}}" id="deleteStudent">
+                <button type="button" class="btn btn-danger {{deleteButtonShow}}" id="deleteAttendance">
                   Жою
                   &nbsp;&nbsp;
                   <i class="fa fa-trash-o"></i>
@@ -146,9 +47,9 @@
             </div>
           </form>
         </div>
-        <button type="button" class="btn btn-primary {{createButtonShow}}" id="createNewStudent">
-          <i class="fa fa-graduation-cap"></i>
-          Жаңа оқушыны   тіркеу
+        <button type="button" class="btn btn-primary {{createButtonShow}}" id="createNewAttendance">
+          <i class="fa fa-pencil-square-o"></i>&nbsp;
+          Жаңа келушілер журнал жазуын тіркеу
         </button>
       {{/if}}
     </div>
