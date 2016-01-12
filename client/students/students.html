@@ -13,23 +13,23 @@
     <div>
       {{#if isInRole 'admin'}}
         <div class="{{hideOrNot}}">
-          <form>
+          <form id="createStudentForm">
             <div class="row">
-              <div class="form-group col-xs-12 col-sm-6 col-md-4">
+              <div class="form-group col-xs-12 col-sm-4 col-md-4">
                 <label for="studentFirstNameField">Аты</label>
                 <div class="input-group">
                   <input class="form-control" type="text" placeholder="Аты" id="studentFirstNameField">
                   <div class="input-group-addon"><i class="fa fa-user"></i></div>
                 </div>
               </div>
-              <div class="form-group col-xs-12 col-sm-6 col-md-4">
+              <div class="form-group col-xs-6 col-sm-4 col-md-4">
                 <label for="studentLastName">Тегі</label>
                 <div class="input-group">
                   <input class="form-control" type="text" placeholder="Тегі" id="studentLastName">
                   <div class="input-group-addon"><i class="fa fa-user"></i></div>
                 </div>
               </div>
-              <div class="form-group col-xs-12 col-sm-6 col-md-4">
+              <div class="form-group col-xs-6 col-sm-4 col-md-4">
                 <label for="studentPatronimicName">Әкесінің аты</label>
                 <div class="input-group">
                   <input class="form-control" type="text" placeholder="Әкесінің аты" id="studentPatronimicName">
@@ -38,14 +38,14 @@
               </div>
             </div>
             <div class="row">
-              <div class="form group col-xs-6">
+              <div class="form group col-xs-12 col-md-6">
                 <label for="studentMobileField">Ұялы телефоны</label>
                 <div class="input-group">
                   <input class="form-control" type="tel" placeholder="+7 701 XXX XX XX" id="studentMobileField">
                   <div class="input-group-addon"><i class="fa fa-phone"></i></div>
                 </div>
               </div>
-              <div class="form-group col-xs-6">
+              <div class="form-group col-xs-12 col-md-6">
                 <label for="studentBranchField">Филиал</label>
                 <div class="input-group">
                   <select class="form-control" id="studentBranchField">
@@ -53,22 +53,44 @@
                       <option value="{{_id}}">{{name}}</option>
                     {{/each}}
                   </select>
+                  <div class="input-group-addon"><i class="fa fa-building"></i></div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-xs-12 col-md-6">
+                <label>Оқушының мектебі:</label>
+                <div class="input-group">
+                  <select class="form-control" id="studentSchoolSelect">
+                    {{#each Schools}}
+                      <option value="{{_id}}">{{name}}</option>
+                    {{/each}}
+                  </select>
+                  <div class="input-group-addon"><i class="fa fa-institution"></i></div>
+                </div>
+              </div>
+              <div class="form-group col-xs-12 col-md-6">
+                <label>Жеңілдіктер:</label>
+                <div class="input-group">
+                  <input type="number" min="0" max="100" value="0" class="form-control" id="studentDiscountField">
+                  <div class="input-group-addon"><i class="fa fa-percent"></i></div>
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="form-group">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 col-md-6">
                   <label for="studentGroupSelect">Топтын пәнің таңданыз:</label>
                   <div class="input-group ">
                     <select id="studentGroupSelect" class="form-control">
                       {{#each Groups}}
-                        <option value="{{_id}}">{{name}}</option>
+                        <option value="{{_id}}">{{getGroupById _id}}</option>
                       {{/each}}
                     </select>
+                    <div class="input-group-addon"><i class="fa fa-book"></i></div>
                   </div>
                 </div>
-                <div class="col-xs-12  col-sm-6">
+                <div class="col-xs-12 col-md-6">
                   <label>&nbsp;</label>
                   <div class="input-group">
                     <button class="btn btn-info" type="button" id="addGroupToStudent">Оқушыны топқа қосу</button>
@@ -89,7 +111,7 @@
                     <div class="box-body">
                       {{#each studentGroups}}
                         <button id="{{this}}" class="removeGroupFromStudent btn btn-primary" style="margin-bottom: 10px;">
-                          {{getGroupById this}} &nbsp;&nbsp;<i class="fa fa-trash-o"></i>
+                          {{getGroupNameById this}} &nbsp;&nbsp;<i class="fa fa-trash-o"></i>
                         </button>&nbsp;&nbsp;&nbsp;&nbsp;
                       {{/each}}
                     </div><!-- /.box-body -->

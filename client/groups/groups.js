@@ -177,6 +177,7 @@ Template.groups.events({
     var gPrice = t.find('#GroupPrice').value;
     var gBranch = t.find('#GroupBranch').value;
     var gSubject = t.find('#GroupSubjectsSelect').value;
+    var gPricePerDay = t.find('#GroupDailyPrice').value;
     var gTeachers = Session.get('thisGroupTeachers');
     var originalTeachers = Session.get('originalTeachers');
 
@@ -191,12 +192,14 @@ Template.groups.events({
     GroupJSON.name = gName;
     GroupJSON.price = gPrice;
     GroupJSON.branch = gBranch;
+    GroupJSON.pricePerDay = gPricePerDay;
     GroupJSON.subject = gSubject;
     GroupJSON.teachers = gTeachers;
     // GroupJSON.students = [];
 
     t.find('#GroupNameField').value = "";
     t.find('#GroupPrice').value = "";
+    t.find('#GroupDailyPrice').value = "";
     Session.set('thisGroupTeachers',[]);
 
     if (Session.get('isEditingGroup')){

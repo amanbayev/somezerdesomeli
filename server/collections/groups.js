@@ -41,6 +41,7 @@ Meteor.methods({
         {
           name : GroupJSON.name,
           price : GroupJSON.price,
+          pricePerDay : GroupJSON.pricePerDay,
           subject : GroupJSON.subject,
           branch : GroupJSON.branch,
           teachers : GroupJSON.teachers,
