@@ -20,12 +20,108 @@
                 <label for="attendanceDateField">Күнді таңданыз:</label>
                 <div class="input-group">
                   <input class="form-control" type="text" id="attendanceDateField">
-                  <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                  <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                </div>
+              </div>
+              <div class="form-group col-xs-12 col-sm-4 col-md-4">
+                <label for="attendanceGroupSelect">Топты таңданыз:</label>
+                <div class="input-group">
+                  <select class="form-control" id="attendanceGroupSelect">
+                    {{#each Groups}}
+                      <option data-select-id="{{@index}}" value="{{_id}}">{{name}}</option>
+                    {{/each}}
+                  </select>
+                  <div class="input-group-addon">
+                    <i class="icon-group"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-xs-12 col-sm-4 col-md-4">
+                <label for="attendanceSubjectField">Топтың пәні:</label>
+                <div class="input-group">
+                  <label class="form-control" id="attendanceSubjectField">{{thisGroupSubjectName}}</label>
+                  <div class="input-group-addon">
+                    <i class="fa fa-book"></i>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="row">
-              <div class="col-xs-6">
+             <div class="col-xs-12">
+                <div class="box">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">{{groupName}} тобының оқушылары</h3>
+                  </div>
+                  <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Аты</th>
+                          <th>Фамилиясы</th>
+                          <th>Орнында</th>
+                          <th>Сұранып кеткен</th>
+                          <th>Келмеген</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {{#each thisAttendanceStudents}}
+                         <tr>
+                          <td>{{ addOne @index }}</td>
+                          <td>{{ getStudentNameById this }}</td>
+                          <td>{{ getStudentLastNameById this }}</td>
+                          <td><button class="btn btn-success attendingBtn" data-student-id="{{this}}">Орнында</button></td>
+                          <td><button class="btn btn-default excusedBtn" data-student-id="{{this}}">Сұранды</button></td>
+                          <td><button class="btn btn-default skippingBtn" data-student-id="{{this}}">Келген жоқ</button></td>
+                         </tr>
+                        {{/each}}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+             </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="form-group">
+                  <label>Мұғалім (-дер):</label>
+                  {{#each teachersNames}}
+                    <button class="btn btn-default removeTeacherFromAttendance" id="{{_id}}">
+                      {{firstName}} {{lastName}}
+                      <i class="fa fa-trash-o"></i>
+                    </button>
+                  {{/each}}
+                </div>
+              </div>
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <select id="selectTeacherForAttendance" class="form-control">
+                      {{#each Teachers}}
+                        <option value="{{_id}}">
+                          {{firstName}} {{lastName}}
+                        </option>
+                      {{/each}}
+                    </select>
+                    <div class="input-group-addon">
+                      <i class="fa fa-users"></i>
+                    </div>
+                  </div>
+                  <br />
+                  <div class="input-group">
+                    <button class="btn btn-info addTeacherToAttendance">
+                      <i class="fa fa-plus"></i>
+                      Мұғалімді қосу
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <!-- кнопки сохранить удалить и отменить -->
+            <div class="row">
+              <div class="col-xs-12 col-md-6">
                 <button type="button" class="btn btn-success" id="saveAttendance">
                   Сақтау
                   &nbsp;&nbsp;
@@ -37,7 +133,7 @@
                   <i class="fa fa-rotate-left"></i>
                 </button>
               </div>
-              <div class="col-xs-6">
+              <div class="col-xs-12 col-md-6">
                 <button type="button" class="btn btn-danger {{deleteButtonShow}}" id="deleteAttendance">
                   Жою
                   &nbsp;&nbsp;

@@ -25,7 +25,7 @@ Meteor.methods({
       if (add){
         groupStudents.push(sId);
         Groups.update({_id:gId}, {$set:{
-          groups: groupStudents
+          students: groupStudents
         }});
       }
     });

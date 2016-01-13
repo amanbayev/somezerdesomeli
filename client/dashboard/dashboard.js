@@ -2,7 +2,7 @@ Template.dashboard.helpers({
   SchoolsCount: function(){
     var countG = 0;
     Meteor.call('getSchoolsCount', function(error, count){
-      console.log('count '+count);
+//      console.log('count '+count);
       Session.set('schoolsCount',count);
     });
     countG = Session.get('schoolsCount');
@@ -33,7 +33,9 @@ Template.dashboard.helpers({
     return Session.get('GroupsCountNew');
   },
   StudentsCount: function(){
-    //
+    Meteor.call('getStudentsCount', function(e,c){
+      Session.set('studentsCount', c);
+    });
     return Session.get('studentsCount');
   }
 });
