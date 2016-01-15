@@ -40,7 +40,12 @@ Template.students.helpers({
     return Session.get('thisStudentGroups');
   },
   getGroupNameById: function(gId){
-    return Groups.findOne({_id:gId}).name;
+    console.log(gId+' is the group id');
+    var cGroup = Groups.findOne({_id:gId});
+    console.log(cGroup);
+    if (cGroup)
+      return cGroup.name;
+    else '';
   },
   getGroupById: function(gId){
     var cGroup = Groups.findOne({_id: gId});
@@ -85,8 +90,11 @@ Template.students.events({
   "click #cancelStudent": function(e,t){
     e.preventDefault();
     Session.set('isCancellingStudent', true);
-    // Session.set('isEditingStudent', false);
-    // Session.set('isCreatingStudent', false);
+    if (Session.get('isEditingStudent')) {
+      $('#'+Session.get('currentStudentId')).removeClass('warning');
+      Session.set('isEditingStudent', false);
+    }
+    $('#createStudentForm').removeClass('animated bounceOutRight');
     $('#createStudentForm').removeClass('animated bounceInLeft');
     $('#createStudentForm').addClass('animated bounceOutLeft');
     $('#createStudentForm').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
@@ -137,6 +145,7 @@ Template.students.events({
     var branch = t.find('#studentBranchField').value;
     var discount = t.find('#studentDiscountField').value;
     var school = t.find('#studentSchoolSelect').value;
+    console.log(school);
     var groups = Session.get('thisStudentGroups');
     var StudentJSON = {};
     StudentJSON.firstName = fName;
@@ -175,10 +184,20 @@ Template.students.events({
           else {
             toastr.success(fName+' '+lName+' оқушы өзгерістері сақталды');
             Session.set('currentStudentId', undefined);
-            Session.set('isCreatingStudent',false);
-            Session.set('isEditingStudent',false);
             Session.set('originalStudentGroups', []);
             $('#'+cStudent._id).removeClass('warning');
+
+            $('#createStudentForm').removeClass('animated bounceOutRight');
+            $('#createStudentForm').removeClass('animated bounceInLeft');
+            $('#createStudentForm').addClass('animated bounceOutLeft');
+            $('#createStudentForm').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+             function(){
+
+                 Session.set('isEditingStudent', false);
+                 Session.set('isCreatingStudent', false);
+                 Session.set('isCancellingStudent', false);
+               
+             });
           }
         }
       );
@@ -189,21 +208,42 @@ Template.students.events({
         else
         {
           toastr.success(fName+' '+lName+' оқушы тіркелді');
-          Session.set('isCreatingStudent', false);
+          $('#createStudentForm').removeClass('animated bounceOutRight');
+          $('#createStudentForm').removeClass('animated bounceInLeft');
+          $('#createStudentForm').addClass('animated bounceOutLeft');
+          $('#createStudentForm').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+           function(){
+
+               Session.set('isEditingStudent', false);
+               Session.set('isCreatingStudent', false);
+               Session.set('isCancellingStudent', false);
+
+           });
         }
       });
     }
   },
   "click .dataRow": function (e,t){
     e.preventDefault();
-    $('#createStudentForm').removeClass('animated bounceOutLeft');
-    $('#createStudentForm').addClass('animated bounceInLeft');
+
     if (Session.get('isEditingStudent')) {
       $('#'+Session.get('currentStudentId')).removeClass('warning');
       Session.set('isEditingStudent', false);
+      $('#createStudentForm').removeClass('animated bounceInLeft');
+      $('#createStudentForm').addClass('animated bounceOutRight');
+      $('#createStudentForm').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+       function(){
+         $('#createStudentForm').removeClass('animated bounceOutRight');
+         $('#createStudentForm').addClass('animated bounceInLeft');
+         Session.set('isCreatingStudent',true);
+         Session.set('isEditingStudent',true);
+       });
+    } else {
+      $('#createStudentForm').removeClass('animated bounceOutLeft');
+      $('#createStudentForm').addClass('animated bounceInLeft');
+      Session.set('isCreatingStudent',true);
+      Session.set('isEditingStudent',true);
     }
-    Session.set('isCreatingStudent',true);
-    Session.set('isEditingStudent',true);
     var sId = $(e.currentTarget).attr('id');
     Session.set('currentStudentId', sId);
     var cStudent = Students.findOne({_id: sId});
@@ -212,6 +252,9 @@ Template.students.events({
     t.find('#studentPatronimicName').value = cStudent.patronimicName;
     t.find('#studentMobileField').value = cStudent.mobile;
     t.find('#studentDiscountField').value = cStudent.discount;
+    schoolId = cStudent.school;
+    // $('#studentSchoolSelect option:[value="'+schoolId+'"]');
+    $('#studentSchoolSelect').val(schoolId);
     Session.set('thisStudentGroups', cStudent.groups);
     Session.set('originalStudentGroups', cStudent.groups);
     e.currentTarget.classList.add('warning');

@@ -1,0 +1,59 @@
+<template name="money">
+  <section class="content-header">
+    <h1>
+      <i class="fa fa-money"></i>&nbsp;Ақша туралы
+      <small>Тіркеу немесе тізімін көру</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="/"><i class="fa fa-dashboard"></i>Басты бет</a></li>
+      <li class="active"><i class="fa fa-money"></i>&nbsp;Ақша туралы</li>
+    </ol>
+  </section>
+
+  <section class="content">
+    {{#if isInRole 'manager,admin'}}
+      <div class="box">
+        <table id="AttendancesTable" class="table table-bordered table-hover">
+          <thead>
+              <tr>
+                <th>#</th>
+                <th>Күні</th>
+                <th>Менеджер</th>
+                <th>Тексеруші</th>
+              </tr>
+          </thead>
+          <tfoot>
+              <tr>
+                <th>#</th>
+                <th>Күні</th>
+                <th>Менеджер</th>
+                <th>Тексеруші</th>
+              </tr>
+          </tfoot>
+          <tbody>
+            {{#each registeredUsers}}
+              <tr class="dataRow">
+                <td>{{addOne @index}}</td>
+                <td>{{this.profile.firstName}}</td>
+                <td>
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" class="isManagerCheckbox" id="{{_id}}" checked="{{checkManager this._id}}"> Менеджер
+                    </label>
+                  </div>
+                </td>
+                <td>
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" class="isCheckerCheckbox" id="{{_id}}" checked="{{checkChecker this._id}}"> Тексеруші
+                    </label>
+                  </div>
+                </td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    {{/if}}
+  </section>
+</template>

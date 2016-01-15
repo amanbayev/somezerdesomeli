@@ -1,4 +1,18 @@
 Template.schools.helpers({
+  getStudentsCount: function(sId){
+    var schoolIds = [];
+    // console.log("id is "+sId);
+    schoolIds.push(sId);
+    // console.log("arr is "+schoolIds);
+    var students = Students.find(
+      {
+        isActive:true,
+        school: { $in: schoolIds }
+      }
+    );
+    // console.log(students.count());
+    return students.count();
+  },
   isCreatingSchool: function(){
     return Session.get('isCreatingSchool');
   },

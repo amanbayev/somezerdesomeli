@@ -13,7 +13,7 @@
   <!-- Main content -->
   <section class="content">
     <div>
-      {{#if isInRole 'admin'}}
+      {{#if isInRole 'manager,admin'}}
         <div class="{{hideOrNot}}">
           <form>
             <div class="form-group">
@@ -74,7 +74,7 @@
               <tr class="dataRow" id="{{_id}}">
                   <td>{{name}}</td>
                   <td>{{address}}</td>
-                  <td>{{students.length}}</td>
+                  <td>{{getStudentsCount _id}}</td>
               </tr>
             {{/each}}
           </tbody>

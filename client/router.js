@@ -33,10 +33,18 @@ Router.route('/groups', function(){
   this.render('groups');
 })
 
+Router.route('/money', function(){
+  this.render('money');
+})
+
 Router.route('/students', function(){
   this.render('students');
 })
 
 Router.route('/attendances', function(){
   this.render('attendances');
+})
+
+Router.route('/managers', function(){
+  this.render('managers');
 })

@@ -13,3 +13,4 @@ Meteor.subscribe("teachers");
 Meteor.subscribe("groups");
 Meteor.subscribe("students");
 Meteor.subscribe("attendances");
+Meteor.subscribe('users');

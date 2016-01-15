@@ -14,7 +14,6 @@ Meteor.methods({
     attendanceJSON.createdBy = this.userId;
     attendanceJSON.createdAt = new Date();
     attendanceJSON.isActive = true;
-    attendanceJSON.students = [];
     return Attendances.insert(attendanceJSON);
   },
   editAttendance: function(aId, attendanceJSON){

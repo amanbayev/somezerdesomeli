@@ -11,6 +11,12 @@
     <li class="{{isActivePath '/groups'}}"><a href="/groups"><i class="icon-group"></i><span>&nbsp;&nbsp;&nbsp;&nbsp;Топтар</span></a></li>
     <li class="{{isActivePath '/students'}}"><a href="/students"><i class="fa fa-graduation-cap"></i> <span>Оқушылар</span></a></li>
     <li class="{{isActivePath '/attendances'}}"><a href="/attendances"><i class="fa fa-pencil-square-o"></i> <span>Келушілер журналы</span></a></li>
+    {{#if isInRole 'manager,admin'}}
+      <li class="{{isActivePath '/managers'}}"><a href="/managers"><i class="fa fa-user"></i> <span>Менеджерлер</span></a></li>
+    {{/if}}
+    {{#if isInRole 'manager,admin'}}
+      <li class="{{isActivePath '/money'}}"><a href="/money"><i class="fa fa-money"></i> <span>Ақша туралы</span></a></li>
+    {{/if}}
   </ul>
   <!-- /.sidebar-menu -->
 </template>

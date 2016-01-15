@@ -1,7 +1,3 @@
-// Template.groups.onRendered(function(){
-//   $("#GroupSubjectsSelect")[0].selectedIndex = 0;
-// });
-
 Template.groups.helpers({
   getTeachers: function(tArr){
     var teachers = [];
@@ -123,6 +119,10 @@ Template.groups.events({
      e.preventDefault();
      Session.set('isCreatingGroup', true);
      Session.set('isEditingGroup', false);
+     $("#GroupSubjectsSelect :nth-child(1)").attr("selected", "selected");
+     var sName = $("#GroupSubjectsSelect option:selected").text();
+     var sCursor = Subjects.findOne({name: sName});
+     Session.set('currentGroupSubjectId', sCursor._id);
   },
   "click #cancelGroupCreate": function(e, t){
      e.preventDefault();
@@ -173,81 +173,110 @@ Template.groups.events({
   "click #saveGroupCreate":function(e,t){
     e.preventDefault();
 
+    var ok = true;
+    var msg = '';
+
     var gName = t.find('#GroupNameField').value;
+    if (gName === '') {
+      ok=false;
+      msg = "Топтын атын таңданыз. ";
+    }
     var gPrice = t.find('#GroupPrice').value;
+    if (gPrice === '') {
+      ok=false;
+      msg = "Топтын бағасын таңданыз. ";
+    }
     var gBranch = t.find('#GroupBranch').value;
     var gSubject = t.find('#GroupSubjectsSelect').value;
     var gPricePerDay = t.find('#GroupDailyPrice').value;
+    if (gPricePerDay === '') {
+      ok=false;
+      msg = "Топтын бір сабақ бағасын таңданыз. ";
+    }
+
     var gTeachers = Session.get('thisGroupTeachers');
     var originalTeachers = Session.get('originalTeachers');
 
     if (originalTeachers === undefined)
       originalTeachers = [];
-
-    if (gTeachers === undefined)
+    if ((gTeachers == undefined) || (gTeachers == ''))
       gTeachers = [];
 
-    var GroupJSON = {};
+    // var testBool = (gTeachers == '');
+    // console.log('teachers: '+ gTeachers+' orig teachers: '+originalTeachers+ ' '+testBool);
+    if ((gTeachers == [])||(gTeachers == '')) {
+      ok = false;
+      msg = "Топтын мұғалімін таңданыз. ";
+    }
+    // ok = false;
 
-    GroupJSON.name = gName;
-    GroupJSON.price = gPrice;
-    GroupJSON.branch = gBranch;
-    GroupJSON.pricePerDay = gPricePerDay;
-    GroupJSON.subject = gSubject;
-    GroupJSON.teachers = gTeachers;
-    // GroupJSON.students = [];
-
-    t.find('#GroupNameField').value = "";
-    t.find('#GroupPrice').value = "";
-    t.find('#GroupDailyPrice').value = "";
-    Session.set('thisGroupTeachers',[]);
-
-    if (Session.get('isEditingGroup')){
-      var cGroup = Groups.findOne({_id:Session.get('currentGroupId')});
-      $("#"+cGroup._id).removeClass('warning');
-      GroupJSON.isActive = cGroup.isActive;
-      GroupJSON.attendances = cGroup.attendances;
-
-      if (cGroup.students === undefined)
-        GroupJSON.students = [];
-      else
-        GroupJSON.students = cGroup.students;
-
-      var removedTeachers = [];
-      originalTeachers.forEach(function(tId, ind){
-        var add = true;
-        gTeachers.forEach(function(nId, i){
-          if (tId === nId)
-            add = false;
-        });
-        if (add)
-          removedTeachers.push(tId);
-      });
+    if (ok) {
 
 
-      Meteor.call('editGroup',
-        Session.get('currentGroupId'),
-        GroupJSON,
-        removedTeachers,
-        function(error){
-        if (error)
-          console.log(error);
-        else {
-          toastr.success(gName+' топ өзгерістері сақталды');
-          Session.set('isEditingGroup',false);
-          Session.set('isCreatingGroup', false);
-        }
-      });
-    } else {
-      Meteor.call('addGroup',GroupJSON, function(error){
-        if (error)
-          console.log(error.reason);
+      var GroupJSON = {};
+
+      GroupJSON.name = gName;
+      GroupJSON.price = gPrice;
+      GroupJSON.branch = gBranch;
+      GroupJSON.pricePerDay = gPricePerDay;
+      GroupJSON.subject = gSubject;
+      GroupJSON.teachers = gTeachers;
+      // GroupJSON.students = [];
+
+      t.find('#GroupNameField').value = "";
+      t.find('#GroupPrice').value = "";
+      t.find('#GroupDailyPrice').value = "";
+      Session.set('thisGroupTeachers',[]);
+
+      if (Session.get('isEditingGroup')){
+        var cGroup = Groups.findOne({_id:Session.get('currentGroupId')});
+        $("#"+cGroup._id).removeClass('warning');
+        GroupJSON.isActive = cGroup.isActive;
+        GroupJSON.attendances = cGroup.attendances;
+
+        if (cGroup.students === undefined)
+          GroupJSON.students = [];
         else
-        {
-          toastr.success(gName+' топ тіркелді');
-          Session.set('isCreatingGroup', false);
-        }
-      });
+          GroupJSON.students = cGroup.students;
+
+        var removedTeachers = [];
+        originalTeachers.forEach(function(tId, ind){
+          var add = true;
+          gTeachers.forEach(function(nId, i){
+            if (tId === nId)
+              add = false;
+          });
+          if (add)
+            removedTeachers.push(tId);
+        });
+
+
+        Meteor.call('editGroup',
+          Session.get('currentGroupId'),
+          GroupJSON,
+          removedTeachers,
+          function(error){
+          if (error)
+            console.log(error);
+          else {
+            toastr.success(gName+' топ өзгерістері сақталды');
+            Session.set('isEditingGroup',false);
+            Session.set('isCreatingGroup', false);
+          }
+        });
+      } else {
+        Meteor.call('addGroup',GroupJSON, function(error){
+          if (error)
+            console.log(error.reason);
+          else
+          {
+            toastr.success(gName+' топ тіркелді');
+            Session.set('isCreatingGroup', false);
+          }
+        });
+      }
+    } else {
+      toastr.error(msg);
     }
   }
 });

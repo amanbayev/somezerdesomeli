@@ -12,7 +12,7 @@
   <section class="content">
     <div>
 
-      {{#if isInRole 'admin'}}
+      {{#if isInRole 'admin,manager,checker'}}
         <div class="{{hideOrNot}}">
           <form id="createAttendanceForm">
             <div class="row">
@@ -20,7 +20,7 @@
                 <label for="attendanceDateField">Күнді таңданыз:</label>
                 <div class="input-group">
                   <input class="form-control" type="text" id="attendanceDateField">
-                  <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                  <div class="input-group-addon"><i id="attendanceDateIcon" class="fa fa-calendar"></i></div>
                 </div>
               </div>
               <div class="form-group col-xs-12 col-sm-4 col-md-4">
@@ -87,7 +87,7 @@
                 <div class="form-group">
                   <label>Мұғалім (-дер):</label>
                   {{#each teachersNames}}
-                    <button class="btn btn-default removeTeacherFromAttendance" id="{{_id}}">
+                    <button class="btn btn-default removeTeacherFromAttendance" id="{{id}}">
                       {{firstName}} {{lastName}}
                       <i class="fa fa-trash-o"></i>
                     </button>
@@ -99,8 +99,8 @@
                   <div class="input-group">
                     <select id="selectTeacherForAttendance" class="form-control">
                       {{#each Teachers}}
-                        <option value="{{_id}}">
-                          {{firstName}} {{lastName}}
+                        <option value="{{ this }}">
+                          {{getTeacherNamesByIds this}}
                         </option>
                       {{/each}}
                     </select>
@@ -110,7 +110,7 @@
                   </div>
                   <br />
                   <div class="input-group">
-                    <button class="btn btn-info addTeacherToAttendance">
+                      <button class="btn btn-info addTeacherToAttendance">
                       <i class="fa fa-plus"></i>
                       Мұғалімді қосу
                     </button>
@@ -147,6 +147,7 @@
           <i class="fa fa-pencil-square-o"></i>&nbsp;
           Жаңа келушілер журнал жазуын тіркеу
         </button>
+
       {{/if}}
     </div>
     <br />
@@ -155,8 +156,59 @@
           <thead>
               <tr>
                 <th>#</th>
-                <th>Күні</th>
-                <th>Тобы</th>
+                <th><span style="color: #367FA9;">
+                  Күні
+                </span> &nbsp;
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-info filterByDateDD" id="filterByDateBtn" value="0" style="text-decoration:none;">Барлығы</button>
+                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                      <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                      <li>
+                        <a href="#" value="0" class="filterByDateDD">Барлығы</a>
+                      </li>
+                      <li class="divider">
+                      </li>
+                      <li>
+                        <a href="#" value="1" class="filterByDateDD">Осы апта</a>
+                      </li>
+                      <li>
+                        <a href="#" value="2" class="filterByDateDD">Алдынғы апта</a>
+                      </li>
+                      <li>
+                        <a href="#" value="3" class="filterByDateDD">Осы айда</a>
+                      </li>
+                      <li>
+                        <a href="#" value="4" class="filterByDateDD">Алдынғы айда</a>
+                      </li>
+                      <li>
+                        <a href="#" value="5" class="filterByDateDD">Осы жылда</a>
+                      </li>
+                    </ul>
+                  </div>
+                </th>
+                <th>Тобы
+                  &nbsp;
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-info" id="filterByGroupBtn" value="0" style="text-decoration:none;">Барлығы</button>
+                      <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu" role="menu">
+                        <li>
+                          <a href="#" value="0" class="filterByGroupDD">Барлық топтар</a>
+                        </li>
+                        <li class="divider">
+                        </li>
+                        {{#each Groups}}
+                          <li>
+                            <a href="#" value="{{_id}}" class="filterByGroupDD">{{name}}</a>
+                          </li>
+                        {{/each}}
+                      </ul>
+                    </div>
+                </th>
                 <th>Оқушылар саны</th>
                 <th>Келмеген саны</th>
                 <th>Тексеруші</th>
@@ -175,12 +227,12 @@
           <tbody>
             {{#each Attendances}}
               <tr class="dataRow" id="{{_id}}">
-                <td>{{@index}}</td>
+                <td>{{addOne @index}}</td>
                 <td>{{getDate date}}</td>
                 <td>{{getGroupNameById group}}</td>
-                <td>{{studentsCount}}</td>
-                <td>{{missingStudentsCount}}</td>
-                <td>{{getUserById author}}</td>
+                <td>{{studentsCount _id}}</td>
+                <td>{{missingStudentsCount _id}}</td>
+                <td>{{getUserById createdBy}}</td>
               </tr>
             {{/each}}
           </tbody>

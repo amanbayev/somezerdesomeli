@@ -12,7 +12,7 @@
 
   <section class="content">
     <div>
-      {{#if isInRole 'admin'}}
+      {{#if isInRole 'manager,admin'}}
         <div class="{{hideOrNot}}">
           <form>
             <div class="row">
@@ -56,7 +56,7 @@
                   <label for="GroupSubjectsSelect">Топтын пәнің таңданыз:</label>
                   <select id="GroupSubjectsSelect" class="form-control" width="40%">
                     {{#each Subjects}}
-                      <option value="{{name}}">{{name}}</option>
+                      <option data-select-id="{{@index}}" value="{{name}}">{{name}}</option>
                     {{/each}}
                   </select>
                 </div>
