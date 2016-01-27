@@ -29,6 +29,27 @@ Template.subjects.helpers({
     else {
       return "hidden";
     }
+  },
+  getStudentsCountForSubject: function(sId){
+    var cSubject = Subjects.findOne({_id:sId});
+    var students = [];
+    if (cSubject){
+      var cGroup = Groups.find({subject : cSubject.name}).fetch();
+      // console.log('for subject '+cSubject.name+':');
+      if (cGroup.length > 0) {
+        cGroup.forEach(function(groupCursor, groupIndex){
+          var gStudents = groupCursor.students;
+          gStudents.forEach(function(gStId, gStInd){
+            var add = students.indexOf(gStId);
+            if (add === -1) {
+              students.push(gStId);
+            }
+          });
+        });
+      }
+      // console.log('students: '+students);
+    }
+    return students.length;
   }
 });
 

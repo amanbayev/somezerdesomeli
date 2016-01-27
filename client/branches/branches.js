@@ -31,6 +31,18 @@ Template.branches.helpers({
     else {
       return "hidden";
     }
+  },
+  getBranchStudents: function(bId){
+    var students = [];
+    var groupsArr = Groups.find({branch : bId}).fetch();
+    groupsArr.forEach(function(cGroup, gInd){
+      var gStudents = cGroup.students;
+      gStudents.forEach(function(gStId, gStInd){
+        var add = students.indexOf(gStId);
+        if (add === -1) students.push(gStId);
+      });
+    });
+    return students.length;
   }
 });
 

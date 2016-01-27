@@ -1,0 +1,155 @@
+<template name="studentPurse">
+  <section class="content-header">
+    <h1>
+      <i class="fa fa-money"></i>&nbsp;Оқушылардан ақша алу
+      <small>Тіркеу немесе тізімін көру</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="/"><i class="fa fa-dashboard"></i>Басты бет</a></li>
+      <li class="active"><i class="fa fa-money"></i>&nbsp;Оқушылардан ақша алу</li>
+    </ol>
+  </section>
+  <section class="content">
+    {{#if isInRole 'manager,admin'}}
+      <!-- {{#if isCreatingTransaction}} -->
+        <div class="{{hideOrNot}}">
+          <div class="col-xs-12 col-md-6">
+            <div class="box box-info">
+              <div class="box-header with-border">
+                Ақша толтыру
+              </div>
+              <form role="form">
+                <div class="box-body">
+                  <div class="form-group col-xs-12 col-md-6">
+                    <label for="DateFieldTransactionCreate">Күнді таңданыз:</label>
+                    <div class="input-group">
+                      <input class="form-control" type="text" id="DateFieldTransactionCreate">
+                      <div class="input-group-addon"><i id="DateFieldIcon" class="fa fa-calendar"></i></div>
+                    </div>
+                  </div>
+                  <div class="form-group col-xs-12 col-md-6">
+                    <label for="StudentNameTransactionCreate">Оқушы</label>
+                    <select class="form-control" id="StudentNameTransactionCreate">
+                      {{#each Students}}
+                        <option id="{{_id}}">
+                          {{firstName}} {{lastName}}
+                        </option>
+                      {{/each}}
+                    </select>
+                  </div>
+                  <div class="form-group col-xs-12">
+                    <label for="AmountTransactionCreate">Сомасы (&#8376;)</label>
+                    <input type="number" class="form-control" id="AmountTransactionCreate" min="0" max="1000000">
+                  </div>
+                </div>
+                <div class="box-footer">
+                  <button type="submit" class="btn btn-primary" id="saveTransactionCreate">Сақтау</button>
+                  <button type="button" class="btn btn-danger" id="cancelTransactionCreate">Болдырмау</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      <div class="col-xs-12 {{createButtonShow}}">
+        <button type="button" class="btn btn-primary" id="startTransactionCreate">Ақша келгенің тіркеу</button>
+      </div>
+      <br />
+      <br />
+      <br />
+      <!-- {{/if}} -->
+      <div class="col-xs-12">
+        <div class="nav-tabs-custom">
+          <ul class="nav nav-tabs">
+            <li class="active">
+              <a href="#tab_1" data-toggle="tab" aria-expanded="true">Ақша толтыру</a>
+            </li>
+            <li class>
+              <a href="#tab_2" data-toggle="tab" aria-expanded="false">Жиналған ақша</a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab_1">
+                <h2>Ақша хронологиясы</h2>
+                <table id="studentPurseTable" class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td>
+                        #
+                      </td>
+                      <td>
+                        Күні
+                      </td>
+                      <td>
+                        Аты Жөні
+                      </td>
+                      <td>
+                        Сомасы
+                      </td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#each PurseTransactions}}
+                      <tr>
+                        <td>
+                          {{addOne @index}}
+                        </td>
+                        <td>
+                          {{parseDate date}}
+                        </td>
+                        <td>
+                          {{getStudent student}}
+                        </td>
+                        <td>
+                          {{amount}} &#8376;
+                        </td>
+                      </tr>
+                    {{/each}}
+                  </tbody>
+                </table>
+              </div>
+
+            <div class="tab-pane" id="tab_2">
+              <h2>Оқушылар тізімі:</h2>
+              <table id="studentPurseTable" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <td>
+                      #
+                    </td>
+                    <td>
+                      Аты
+                    </td>
+                    <td>
+                      Жөні
+                    </td>
+                    <td>
+                      Сомасы
+                    </td>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each Students}}
+                    <tr>
+                      <td>
+                        {{addOne @index}}
+                      </td>
+                      <td>
+                        {{firstName}}
+                      </td>
+                      <td>
+                        {{lastName}}
+                      </td>
+                      <td>
+                        {{getStudentTotal _id}} &#8376;
+                      </td>
+                    </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    {{/if}}
+  </section>
+</template>

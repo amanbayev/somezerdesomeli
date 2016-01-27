@@ -23,12 +23,12 @@ Template.teachers.helpers({
     if (Session.get('isCreatingTeacher'))
       {
         return "show";
-        console.log('showing');
+        // console.log('showing');
       }
     else
     {
       return "hidden";
-      console.log('hiding');
+      // console.log('hiding');
     }
   },
   createButtonShow: function(){
@@ -47,6 +47,26 @@ Template.teachers.helpers({
   getSubjectById: function(sId){
     var sCursor = Subjects.findOne({_id:sId});
     return sCursor.name;
+  },
+  getTeacherStudents: function(tId){
+    var cTeacher = Teachers.findOne({_id:tId});
+    var students = [];
+    // console.log(cTeacher.firstName+' students array is '+students);
+    if (cTeacher) {
+      var gArr = cTeacher.groups;
+      gArr.forEach(function(gId, gInd){
+        var cGroup = Groups.findOne({_id: gId});
+        if (cGroup) {
+          var studentsArr = cGroup.students;
+          studentsArr.forEach(function(sId, sInd){
+            var add = students.indexOf(sId);
+            if (add === -1) students.push(sId);
+          });
+          // console.log('students array is '+students);
+        }
+      });
+      return students.length;
+    }
   }
 });
 

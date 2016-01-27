@@ -17,6 +17,9 @@
     {{#if isInRole 'manager,admin'}}
       <li class="{{isActivePath '/money'}}"><a href="/money"><i class="fa fa-money"></i> <span>Ақша туралы</span></a></li>
     {{/if}}
+    {{#if isInRole 'admin,manager'}}
+      <li class="{{isActivePath '/studentPurse'}}"><a href="/studentPurse"><i class="fa fa-money"></i> <span>Оқушылардан ақша алу</span></a></li>
+    {{/if}}
   </ul>
   <!-- /.sidebar-menu -->
 </template>

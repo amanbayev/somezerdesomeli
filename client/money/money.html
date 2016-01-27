@@ -12,47 +12,113 @@
 
   <section class="content">
     {{#if isInRole 'manager,admin'}}
-      <div class="box">
-        <table id="AttendancesTable" class="table table-bordered table-hover">
-          <thead>
-              <tr>
-                <th>#</th>
-                <th>Күні</th>
-                <th>Менеджер</th>
-                <th>Тексеруші</th>
-              </tr>
-          </thead>
-          <tfoot>
-              <tr>
-                <th>#</th>
-                <th>Күні</th>
-                <th>Менеджер</th>
-                <th>Тексеруші</th>
-              </tr>
-          </tfoot>
-          <tbody>
-            {{#each registeredUsers}}
-              <tr class="dataRow">
-                <td>{{addOne @index}}</td>
-                <td>{{this.profile.firstName}}</td>
-                <td>
-                  <div class="checkbox">
-                    <label>
-                      <input type="checkbox" class="isManagerCheckbox" id="{{_id}}" checked="{{checkManager this._id}}"> Менеджер
-                    </label>
-                  </div>
-                </td>
-                <td>
-                  <div class="checkbox">
-                    <label>
-                      <input type="checkbox" class="isCheckerCheckbox" id="{{_id}}" checked="{{checkChecker this._id}}"> Тексеруші
-                    </label>
-                  </div>
-                </td>
-              </tr>
-            {{/each}}
-          </tbody>
-        </table>
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <div class="btn-group">
+            <button type="button" class="btn btn-info dropdown-toggle teacherNameBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Мұғалімді таңданыз &nbsp;&nbsp;<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              {{#each Teachers}}
+                <li>
+                  <a href="#" id="{{_id}}" class="teacherSelector">{{lastName}}&nbsp;{{firstName}}</a>
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+
+          <div class="btn-group">
+            <button type="button" class="btn btn-info dropdown-toggle subjectNameBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Мұғалім тобын таңданыз &nbsp;&nbsp;<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              {{#each TeacherGroups}}
+                <li>
+                  <a href="#" id="{{_id}}" class="subjectSelector">{{name}}</a>
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+
+          <div class="btn-group">
+            <button type="button" class="btn btn-info dropdown-toggle monthPickBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Айды таңданыз &nbsp; <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              {{#each getMonths}}
+                <li>
+                  <a href="#" id="{{@index}}" class="monthSelector">{{this}}</a>
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+
+          <div class="btn-group">
+            <button type="button" class="btn btn-info dropdown-toggle yearPickBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              2016 &nbsp; <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              {{#each getYears}}
+                <li>
+                  <a href="#" id="{{this}}" class="yearSelector">{{this}}</a>
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+
+        </div>
+        <div class="box-body">
+          {{#if hasAllDataToShow}}
+            <h2>Барлығы болған сабақтар саны: {{classesCount}}</h2>
+            <table id="AttendancesTable" class="table table-bordered table-hover">
+              <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Аты Жөні</th>
+                    <th>Пән</th>
+                    <th>Сабақ қатысуы</th>
+                    <th>Алдынғы қалғындық</th>
+                    <th>Төленетін</th>
+                    <th>Төленгені</th>
+                    <th>Қалғандық</th>
+                    <th>Қарыз</th>
+                  </tr>
+              </thead>
+              <tfoot>
+                  <tr>
+                    <th>#</th>
+                    <th>Аты Жөні</th>
+                    <th>Пән</th>
+                    <th>Сабақ қатысуы</th>
+                    <th>Алдынғы қалғындық</th>
+                    <th>Төленетін</th>
+                    <th>Төленгені</th>
+                    <th>Қалғандық</th>
+                    <th>Қарыз</th>
+                  </tr>
+              </tfoot>
+              <tbody>
+                {{#each Students}}
+                  <tr class="dataRow">
+                    <td>{{addOne @index}}</td>
+                    <td>{{firstName}}&nbsp;{{lastName}}</td>
+                    <td class="subjectNameTableText">
+                      {{currentGroupId}}
+                    </td>
+                    <td>
+                      {{attendanceCount _id}}
+                    </td>
+                    <td>{{studentDebt _id}}&nbsp;&#8376;</td>
+                    <td>{{duePayment _id}}</td>
+                    <td><input id="{{_id}}" class="paymentPaid"></td>
+                    <td>0</td>
+                    <td>0</td>
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          {{/if}}
+        </div>
       </div>
     {{/if}}
   </section>

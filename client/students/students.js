@@ -15,12 +15,12 @@ Template.students.helpers({
     if (Session.get('isCreatingStudent'))
       {
         return "show";
-        console.log('showing');
+        // console.log('showing');
       }
     else
     {
       return "hidden";
-      console.log('hiding');
+      // console.log('hiding');
     }
   },
   createButtonShow: function(){
@@ -40,9 +40,9 @@ Template.students.helpers({
     return Session.get('thisStudentGroups');
   },
   getGroupNameById: function(gId){
-    console.log(gId+' is the group id');
+    // console.log(gId+' is the group id');
     var cGroup = Groups.findOne({_id:gId});
-    console.log(cGroup);
+    // console.log(cGroup);
     if (cGroup)
       return cGroup.name;
     else '';
@@ -145,7 +145,7 @@ Template.students.events({
     var branch = t.find('#studentBranchField').value;
     var discount = t.find('#studentDiscountField').value;
     var school = t.find('#studentSchoolSelect').value;
-    console.log(school);
+    // console.log(school);
     var groups = Session.get('thisStudentGroups');
     var StudentJSON = {};
     StudentJSON.firstName = fName;
@@ -196,7 +196,7 @@ Template.students.events({
                  Session.set('isEditingStudent', false);
                  Session.set('isCreatingStudent', false);
                  Session.set('isCancellingStudent', false);
-               
+
              });
           }
         }

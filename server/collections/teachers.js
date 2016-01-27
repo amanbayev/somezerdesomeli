@@ -24,13 +24,13 @@ Meteor.methods({
         var sCursor = Subjects.findOne({_id:o, isActive:true});
         if (sCursor) {
           var sTeachers = sCursor.teachers;
-          var add = true;
-          sTeachers.forEach(function(oo,ii){
-            if (oo = teacherId) {
-              add = false;
-            }
-          });
-          if (add){
+          var add = sTeachers.indexOf(teacherId);
+          // sTeachers.forEach(function(oo,ii){
+          //   if (oo = teacherId) {
+          //     add = false;
+          //   }
+          // });
+          if (add === -1){
             sTeachers.push(teacherId);
             Subjects.update({_id:sCursor._id}, {$set:{
               teachers: sTeachers
@@ -42,6 +42,8 @@ Meteor.methods({
     return teacherId;
   },
   editTeacher: function(teacherId, teacherJSON){
+    var cTeacher = Teachers.findOne({_id : teacherId });
+    var origSubs = cTeacher.subjects;
     Teachers.update(
       {_id:teacherId},
       {
@@ -65,17 +67,33 @@ Meteor.methods({
         }
       });
     var subs = teacherJSON.subjects;
-    console.log(subs+' and id is '+teacherId);
+    console.log(subs+', original is '+origSubs+' and tId is '+teacherId);
     if ((subs !== []) || (subs !== undefined)) {
+      origSubs.forEach(function(orSubId, orSubIndex) {
+        var deleted = subs.indexOf(orSubId);
+        if (deleted === -1) {
+          var cDeletedSubject = Subjects.findOne({_id : orSubId });
+          var newTeachers = cDeletedSubject.teachers;
+          var position = newTeachers.indexOf(teacherId);
+          console.log('removing teacher from subject '+cDeletedSubject.name);
+          newTeachers.splice(position,1);
+          Subjects.update({_id : orSubId }, {$set: {
+            teachers: newTeachers
+          }});
+        }
+      });
       subs.forEach(function(o,i){
         console.log('for subject id: '+o);
         var sCursor = Subjects.findOne({_id:o, isActive:true});
         if (sCursor) {
           var sTeachers = sCursor.teachers;
-          sTeachers.push(teacherId);
-          Subjects.update({_id:sCursor._id}, {$set:{
-            teachers: sTeachers
-          }});
+          var add = sTeachers.indexOf(teacherId);
+          if (add === -1) {
+            sTeachers.push(teacherId);
+            Subjects.update({_id:sCursor._id}, {$set:{
+              teachers: sTeachers
+            }});
+          }
         }
       });
     }
