@@ -18,11 +18,11 @@ Template.studentPurse.helpers({
   },
   getStudentTotal: function(sId){
     var transactions = PurseTransactions.find({student: sId}).fetch();
-    console.log('for studnet '+sId+' trans: '+transactions);
+    // console.log('for studnet '+sId+' trans: '+transactions);
     if (transactions.length > 0) {
       var sum = 0;
       transactions.forEach(function(trObj, trPos){
-        console.log('adding to sum '+sum+' += '+trObj.amount);
+        // console.log('adding to sum '+sum+' += '+trObj.amount);
         sum += trObj.amount;
       });
       return sum;

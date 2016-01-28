@@ -12,6 +12,10 @@ Template.managers.helpers({
   checkChecker: function(id){
     var bool = Roles.userIsInRole(id, ['checker']);
     return bool;
+  },
+  checkAccountant: function(id){
+    var bool = Roles.userIsInRole(id, ['accountant']);
+    return bool;
   }
 });
 
@@ -27,6 +31,26 @@ Template.managers.events({
       });
     } else {
         Meteor.call('removeManager', id, function(error){
+          if (error) {
+            console.log(error);
+            toastr.error(error.reason);
+          }
+          else
+          console.log('success');
+        });
+    }
+  },
+  "change .isAccountantCheckbox": function(e, t){
+    var id = e.currentTarget.id;
+    var state = e.currentTarget.checked;
+    if (state) {
+      Meteor.call('makeAccountant', id, function(error){
+        if (error) console.log(error);
+        else
+        console.log('success');
+      });
+    } else {
+        Meteor.call('removeAccountant', id, function(error){
           if (error) {
             console.log(error);
             toastr.error(error.reason);

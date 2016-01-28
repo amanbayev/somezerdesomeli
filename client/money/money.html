@@ -11,7 +11,7 @@
   </section>
 
   <section class="content">
-    {{#if isInRole 'manager,admin'}}
+    {{#if isInRole 'accountant,admin'}}
       <div class="box box-primary">
         <div class="box-header with-border">
           <div class="btn-group">
@@ -70,6 +70,7 @@
         <div class="box-body">
           {{#if hasAllDataToShow}}
             <h2>Барлығы болған сабақтар саны: {{classesCount}}</h2>
+            <h3>1 сабақ бағасы: {{classPrice}}&nbsp;&#8376;</h3>
             <table id="AttendancesTable" class="table table-bordered table-hover">
               <thead>
                   <tr>
@@ -81,7 +82,6 @@
                     <th>Төленетін</th>
                     <th>Төленгені</th>
                     <th>Қалғандық</th>
-                    <th>Қарыз</th>
                   </tr>
               </thead>
               <tfoot>
@@ -94,7 +94,6 @@
                     <th>Төленетін</th>
                     <th>Төленгені</th>
                     <th>Қалғандық</th>
-                    <th>Қарыз</th>
                   </tr>
               </tfoot>
               <tbody>
@@ -108,15 +107,60 @@
                     <td>
                       {{attendanceCount _id}}
                     </td>
-                    <td>{{studentDebt _id}}&nbsp;&#8376;</td>
-                    <td>{{duePayment _id}}</td>
-                    <td><input id="{{_id}}" class="paymentPaid"></td>
-                    <td>0</td>
-                    <td>0</td>
+                    <!-- <td>{{studentDebt _id}}&nbsp;&#8376;</td> -->
+                    <td>
+                      {{studentPurse _id}}&nbsp;&#8376;
+                    </td>
+                    <td class="duePaymentTD">{{duePayment _id}}&nbsp;&#8376;</td>
+                    <td><input id="{{_id}}" class="paymentPaid" value="{{duePayment _id}}">&nbsp;&#8376;</td>
+                    <td>0&nbsp;&#8376;</td>
                   </tr>
                 {{/each}}
+                <tr>
+                  <td>
+                    Барлығы:
+                  </td>
+                  <td>
+                    {{studentsCount}}
+                  </td>
+                  <td>
+                  </td>
+                  <td>
+                    {{totalAttendances}}
+                  </td>
+                  <td>
+                  </td>
+                  <td>
+                    {{totalMoneyMustBePaid}}&nbsp;&#8376;
+                  </td>
+                  <td>
+                    {{totalToPay}}&nbsp;&#8376;&nbsp;&nbsp;<button class="btn btn-default" id="recountMoney">Қайта санау</button>
+                  </td>
+                  <td>
+                  </td>
+                </tr>
               </tbody>
             </table>
+            <br />
+            <button class="form-control btn btn-success" id="saveAndRecount">Сақтау</button>
+
+            <div class="modal fade modal-warning" id="myModal" tabindex="-1" role="dialog" aria-labelledby="Өзгерістерді сақтау">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Өзгерістерді сақтау</h4>
+                  </div>
+                  <div class="modal-body">
+                    Осы өзгерістерді сақтаған соң, қайта дұрыстау болмайды!
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Болдырмау</button>
+                    <button type="button" class="btn btn-primary" id="saveChangesAgreeBtn">Сақтау</button>
+                  </div>
+                </div>
+              </div>
+            </div>
           {{/if}}
         </div>
       </div>

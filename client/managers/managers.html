@@ -11,7 +11,7 @@
   </section>
 
   <section class="content">
-    {{#if isInRole 'manager,admin'}}
+    {{#if isInRole 'admin'}}
       <div class="box">
         <table id="AttendancesTable" class="table table-bordered table-hover">
           <thead>
@@ -20,6 +20,7 @@
                 <th>Күні</th>
                 <th>Менеджер</th>
                 <th>Тексеруші</th>
+                <th>Бухгалтер</th>
               </tr>
           </thead>
           <tfoot>
@@ -28,6 +29,7 @@
                 <th>Күні</th>
                 <th>Менеджер</th>
                 <th>Тексеруші</th>
+                <th>Бухгалтер</th>
               </tr>
           </tfoot>
           <tbody>
@@ -46,6 +48,13 @@
                   <div class="checkbox">
                     <label>
                       <input type="checkbox" class="isCheckerCheckbox" id="{{_id}}" checked="{{checkChecker this._id}}"> Тексеруші
+                    </label>
+                  </div>
+                </td>
+                <td>
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" class="isAccountantCheckbox" id="{{_id}}" checked="{{checkAccountant this._id}}"> Бухгалтер
                     </label>
                   </div>
                 </td>

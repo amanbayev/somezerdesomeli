@@ -22,5 +22,15 @@ Meteor.methods({
     }
     Roles.removeUsersFromRoles(id, 'checker');
     console.log('removed');
+  },
+  makeAccountant:function(id){
+    Roles.addUsersToRoles(id, 'accountant');
+  },
+  removeAccountant:function(id) {
+    if (Roles.userIsInRole(id,'admin')) {
+      throw new Meteor.Error(500, 'Администраторды өзгертуге болмайды','Администраторды өзгертуге болмайды');
+    }
+    Roles.removeUsersFromRoles(id, 'accountant');
+    console.log('removed');
   }
 });
