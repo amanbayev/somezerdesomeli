@@ -2,6 +2,9 @@ Template.subjects.helpers({
   isCreatingSubject: function(){
     return Session.get('isCreatingSubject');
   },
+  addOne: function(num) {
+    return num + 1;
+  },
   Subjects: function(){
     return Subjects.find({});
   },
@@ -30,6 +33,28 @@ Template.subjects.helpers({
       return "hidden";
     }
   },
+  getSubjectForModal: function(){
+    var sId = Session.get('selectedSubjectIdForModal');
+    if (sId) {
+      var cSubject = Subjects.findOne({_id: sId, isActive:true});
+      return cSubject;
+    }
+  },
+  getTeachersForSubject: function(){
+    var sId = Session.get('selectedSubjectIdForModal');
+    if (sId) {
+      var cSubject = Subjects.findOne({_id: sId, isActive:true});
+      if (cSubject)
+      {
+        var sTeachers = cSubject.teachers;
+        if (sTeachers) {
+          return Teachers.find({_id: {$in: sTeachers}},{
+            sort: { lastName:1, firstName:1 }
+          });
+        } else return [];
+      }
+    }
+  },
   getStudentsCountForSubject: function(sId){
     var cSubject = Subjects.findOne({_id:sId});
     var students = [];
@@ -54,6 +79,12 @@ Template.subjects.helpers({
 });
 
 Template.subjects.events({
+  "click .seeTeachers": function(e,t){
+    e.preventDefault();
+    var id = $(e.currentTarget).attr('id');
+    Session.set('selectedSubjectIdForModal', id);
+    $('#myModal').modal('show');
+  },
   "click #deleteSubjectEdit": function(e,t){
     e.preventDefault();
     var rowId = Session.get('currentSubjectId');

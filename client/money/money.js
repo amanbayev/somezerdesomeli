@@ -1,12 +1,23 @@
 Template.money.helpers({
+  teacherPercent: function(){
+    var tId = Session.get('currentTeacherId');
+    if (tId) {
+      var cTeacher = Teachers.findOne({_id:tId, isActive:true});
+      if (cTeacher) {
+        return cTeacher.percent;
+      }
+    }
+  },
   payToTeacher: function(){
     var tId = Session.get('currentTeacherId');
-    var cTeacher = Teachers.findOne({_id:tId, isActive:true});
-    var percent = cTeacher.percent;
-    var totalToPay = Session.get('totalToPay');
-    console.log(totalToPay+" total to pay");
-    console.log(percent+" percent");
-    return totalToPay / 100 * percent;
+    if (tId){
+      var cTeacher = Teachers.findOne({_id:tId, isActive:true});
+      if (cTeacher) {
+        var percent = cTeacher.percent;
+        var totalToPay = Session.get('totalToPay');
+        return totalToPay / 100 * percent;
+      }
+    }
   },
   hasAllDataToShow: function(){
     var gId = Session.get('currentGroupId');
@@ -14,16 +25,6 @@ Template.money.helpers({
     var mId = Session.get('selectedMonth');
     var yId = Session.get('selectedYear');
     return (gId && tId && mId && yId);
-  },
-  classPrice: function(){
-    var gId = Session.get('currentGroupId');
-    if (gId){
-      var cGroup = Groups.findOne({_id:gId});
-      if (cGroup){
-        var pricePerDay = cGroup.pricePerDay;
-        return pricePerDay;
-      }
-    }
   },
   attendanceCount: function(sId){
     var gId = Session.get('currentGroupId');
@@ -83,6 +84,12 @@ Template.money.helpers({
     });
     return total;
   },
+  oneClassPrice: function(sId){
+    if (sId){
+      var cStudent = Students.findOne({_id:sId});
+      return cStudent.oneClass;
+    }
+  },
   classesCount: function(){
     var gId = Session.get('currentGroupId');
     var monthNumber = Session.get('selectedMonth');
@@ -120,8 +127,8 @@ Template.money.helpers({
         $lt: endDate
       },
       attendedStudents: {$in: [sId]}});
-    var cGroup = Groups.findOne({_id:gId});
-    var pricePerDay = cGroup.pricePerDay;
+    var cStudent = Students.findOne({_id:sId});
+    var pricePerDay = cStudent.oneClass;
     var sum = parseInt(pricePerDay) * attendances.count();
     // pricePerDay+' * '+attendances.count()+' = '+
     return sum;

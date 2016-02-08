@@ -70,8 +70,7 @@
         <div class="box-body">
           {{#if hasAllDataToShow}}
             <h2>Барлығы болған сабақтар саны: {{classesCount}}</h2>
-            <h3>1 сабақ бағасы: {{classPrice}}&nbsp;&#8376;</h3>
-            <h4>Мұғалімге төлеу: <input class="payToTeacherInput" value="{{payToTeacher}}">&nbsp;&#8376;</h4>
+            <h4>Мұғалімге төлеу: <input class="payToTeacherInput" value="{{payToTeacher}}">&nbsp;&#8376; ({{teacherPercent}} % {{totalToPay}}&nbsp;&#8376;&nbsp;)</h4>
             <table id="AttendancesTable" class="table table-bordered table-hover">
               <thead>
                   <tr>
@@ -80,6 +79,7 @@
                     <th>Пән</th>
                     <th>Сабақ қатысуы</th>
                     <th>Алдынғы қалғындық</th>
+                    <th>Тариф</th>
                     <th>Төленетін</th>
                     <th>Төленгені</th>
                     <th>Қалғандық</th>
@@ -92,6 +92,7 @@
                     <th>Пән</th>
                     <th>Сабақ қатысуы</th>
                     <th>Алдынғы қалғындық</th>
+                    <th>Тариф</th>
                     <th>Төленетін</th>
                     <th>Төленгені</th>
                     <th>Қалғандық</th>
@@ -106,11 +107,14 @@
                       {{currentGroupId}}
                     </td>
                     <td>
-                      {{attendanceCount _id}}
+                      {{attendanceCount _id}} / {{classesCount}}
                     </td>
                     <!-- <td>{{studentDebt _id}}&nbsp;&#8376;</td> -->
                     <td>
                       {{studentPurse _id}}&nbsp;&#8376;
+                    </td>
+                    <td>
+                      {{oneClassPrice _id}}&nbsp;&#8376;
                     </td>
                     <td class="duePaymentTD">{{duePayment _id}}&nbsp;&#8376;</td>
                     <td><input id="{{_id}}" class="paymentPaid" value="{{duePayment _id}}">&nbsp;&#8376;</td>
@@ -128,6 +132,8 @@
                   </td>
                   <td>
                     {{totalAttendances}}
+                  </td>
+                  <td>
                   </td>
                   <td>
                   </td>
