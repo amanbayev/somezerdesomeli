@@ -15,21 +15,21 @@
         <div class="{{hideOrNot}}">
           <form id="createStudentForm">
             <div class="row">
-              <div class="form-group col-xs-12 col-sm-4 col-md-4">
+              <div class="form-group col-xs-12 col-sm-4 col-md-3">
+                <label for="studentLastName">Жөні</label>
+                <div class="input-group">
+                  <input class="form-control" type="text" placeholder="Жөні" id="studentLastName">
+                  <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                </div>
+              </div>
+              <div class="form-group col-xs-6 col-sm-4 col-md-3">
                 <label for="studentFirstNameField">Аты</label>
                 <div class="input-group">
                   <input class="form-control" type="text" placeholder="Аты" id="studentFirstNameField">
                   <div class="input-group-addon"><i class="fa fa-user"></i></div>
                 </div>
               </div>
-              <div class="form-group col-xs-6 col-sm-4 col-md-4">
-                <label for="studentLastName">Тегі</label>
-                <div class="input-group">
-                  <input class="form-control" type="text" placeholder="Тегі" id="studentLastName">
-                  <div class="input-group-addon"><i class="fa fa-user"></i></div>
-                </div>
-              </div>
-              <div class="form-group col-xs-6 col-sm-4 col-md-4">
+              <div class="form-group col-xs-6 col-sm-4 col-md-3">
                 <label for="studentPatronimicName">Әкесінің аты</label>
                 <div class="input-group">
                   <input class="form-control" type="text" placeholder="Әкесінің аты" id="studentPatronimicName">
@@ -38,14 +38,54 @@
               </div>
             </div>
             <div class="row">
-              <div class="form group col-xs-12 col-md-6">
+              <div class="form-group col-xs-6 col-sm-4 col-md-3">
+                <label for="studentEmail">Email</label>
+                <div class="input-group">
+                  <input class="form-control" type="text" placeholder="Email" id="studentEmail">
+                  <div class="input-group-addon"><i class="fa fa-envelope"></i></div>
+                </div>
+              </div>
+              <div class="form-group col-xs-3 col-md-3">
+                <label for="studentMonthlyPrice">Айлы төлем:</label>
+                <div class="input-group">
+                  <!-- studentDiscountField -->
+                  <input type="number" min="0" max="1000000" placeholder="19200" class="form-control" id="studentMonthlyPrice">
+                  <div class="input-group-addon"><i class="fa fa-money"></i></div>
+                </div>
+              </div>
+              <div class="form-group col-xs-3 col-md-3">
+                <label for="studentOneClassPrice">Бір сабақ бағасы:</label>
+                <div class="input-group">
+                  <input type="number" min="0" max="1000000" placeholder="1600" class="form-control" id="studentOneClassPrice">
+                  <div class="input-group-addon"><i class="fa fa-money"></i></div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-xs-6 col-sm-4 col-md-3">
+                <label for="studentFathersOccupation">Әкесінің жұмыс орны</label>
+                <div class="input-group">
+                  <input class="form-control" type="text" placeholder="Әкесінің жұмыс орны" id="studentFathersOccupation">
+                  <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                </div>
+              </div>
+              <div class="form-group col-xs-6 col-sm-4 col-md-3">
+                <label for="studentMothersOccupation">Анасының жұмыс орны</label>
+                <div class="input-group">
+                  <input class="form-control" type="text" placeholder="Анасының жұмыс орны" id="studentMothersOccupation">
+                  <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form group col-xs-12 col-md-3">
                 <label for="studentMobileField">Ұялы телефоны</label>
                 <div class="input-group">
                   <input class="form-control" type="tel" placeholder="+7 701 XXX XX XX" id="studentMobileField">
                   <div class="input-group-addon"><i class="fa fa-phone"></i></div>
                 </div>
               </div>
-              <div class="form-group col-xs-12 col-md-6">
+              <div class="form-group col-xs-12 col-md-3">
                 <label for="studentBranchField">Филиал</label>
                 <div class="input-group">
                   <select class="form-control" id="studentBranchField">
@@ -56,9 +96,7 @@
                   <div class="input-group-addon"><i class="fa fa-building"></i></div>
                 </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="form-group col-xs-12 col-md-6">
+              <div class="form-group col-xs-12 col-md-3">
                 <label>Оқушының мектебі:</label>
                 <div class="input-group">
                   <select class="form-control" id="studentSchoolSelect">
@@ -67,13 +105,6 @@
                     {{/each}}
                   </select>
                   <div class="input-group-addon"><i class="fa fa-institution"></i></div>
-                </div>
-              </div>
-              <div class="form-group col-xs-12 col-md-6">
-                <label>Жеңілдіктер:</label>
-                <div class="input-group">
-                  <input type="number" min="0" max="100" value="0" class="form-control" id="studentDiscountField">
-                  <div class="input-group-addon"><i class="fa fa-percent"></i></div>
                 </div>
               </div>
             </div>

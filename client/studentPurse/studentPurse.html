@@ -10,7 +10,7 @@
     </ol>
   </section>
   <section class="content">
-    {{#if isInRole 'accountant,admin'}}
+    {{#if isInRole 'accountant,admin,manager'}}
       <!-- {{#if isCreatingTransaction}} -->
         <div class="{{hideOrNot}}">
           <div class="col-xs-12 col-md-6">
@@ -63,8 +63,11 @@
             <li class="active">
               <a href="#tab_1" data-toggle="tab" aria-expanded="true">Ақша толтыру</a>
             </li>
-            <li class>
+            <li>
               <a href="#tab_2" data-toggle="tab" aria-expanded="false">Жиналған ақша</a>
+            </li>
+            <li>
+              <a href="#tab_3" data-toggle="tab" aria-expanded="false">Мұғалімдерге төлемдер</a>
             </li>
           </ul>
           <div class="tab-content">
@@ -107,7 +110,6 @@
                   </tbody>
                 </table>
               </div>
-
             <div class="tab-pane" id="tab_2">
               <h2>Оқушылар тізімі:</h2>
               <table id="studentPurseTable" class="table table-bordered table-hover">
@@ -139,8 +141,47 @@
                       <td>
                         {{lastName}}
                       </td>
-                      <td>
+                      <td id={{_id}} class="columnWithMoney">
                         {{getStudentTotal _id}} &#8376;
+                      </td>
+                    </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            </div>
+            <div class="tab-pane" id="tab_3">
+              <h2>Мұғалімдерге төлемдер:</h2>
+              <table id="teacherPurseTable" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <td>
+                      #
+                    </td>
+                    <td>
+                      Күні
+                    </td>
+                    <td>
+                      Аты Жөні
+                    </td>
+                    <td>
+                      Сомасы
+                    </td>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each TeacherPurseTransactions}}
+                    <tr>
+                      <td>
+                        {{addOne @index}}
+                      </td>
+                      <td>
+                        {{parseDate date}}
+                      </td>
+                      <td>
+                        {{getTeacher teacherId}}
+                      </td>
+                      <td>
+                        {{amount}} &#8376;
                       </td>
                     </tr>
                   {{/each}}

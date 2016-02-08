@@ -1,6 +1,6 @@
 PurseTransactions = new Mongo.Collection('PurseTransactions');
 Meteor.publish("PurseTransactions", function(argument){
-  return PurseTransactions.find({});
+  return PurseTransactions.find({isActive:true},{sort: {'date':-1}});
 });
 Meteor.methods({
   addPurseTransaction: function(TransactionJSON){

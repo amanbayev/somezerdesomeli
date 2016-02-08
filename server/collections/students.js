@@ -7,6 +7,12 @@ Meteor.methods({
     Students.update({_id:rowId}, {$set:{
       isActive: false
     }});
+    console.log('sId = '+rowId);
+    PurseTransactions.update({student: rowId}, {
+      $set: {
+        isActive: false
+      }
+    })
   },
   addStudent: function(StudentJSON){
     StudentJSON.createdBy = this.userId;
@@ -43,8 +49,12 @@ Meteor.methods({
           mobile : StudentJSON.mobile,
           groups: StudentJSON.groups,
           branch : StudentJSON.branch,
-          discount: StudentJSON.discount,
           school: StudentJSON.school,
+          email: StudentJSON.email,
+          monthly: StudentJSON.monthly,
+          oneClass: StudentJSON.oneClass,
+          fathersOccupation: StudentJSON.fathersOccupation,
+          mothersOccupation: StudentJSON.mothersOccupation,
           isActive: StudentJSON.isActive,
           updatedAt: new Date(),
           updatedBy: this.userId

@@ -1,4 +1,13 @@
 Template.money.helpers({
+  payToTeacher: function(){
+    var tId = Session.get('currentTeacherId');
+    var cTeacher = Teachers.findOne({_id:tId, isActive:true});
+    var percent = cTeacher.percent;
+    var totalToPay = Session.get('totalToPay');
+    console.log(totalToPay+" total to pay");
+    console.log(percent+" percent");
+    return totalToPay / 100 * percent;
+  },
   hasAllDataToShow: function(){
     var gId = Session.get('currentGroupId');
     var tId = Session.get('currentTeacherId');
@@ -218,15 +227,15 @@ Template.money.events({
         total += parseInt(el.value, 10);
     });
     Session.set('totalToPay', total);
-    console.log('total is '+total);
+    // console.log('total is '+total);
 
     var table = t.find('#AttendancesTable');
-    console.log(table);
+    // console.log(table);
     for (var i = 0, row; row = table.rows[i]; i++){
       var cell1 = row.cells[4].innerHTML;
       var len1 = cell1.length
-      console.log(cell1.substring(0,len1-7));
-      console.log(row.cells[5].innerHTML);
+      // console.log(cell1.substring(0,len1-7));
+      // console.log(row.cells[5].innerHTML);
     }
   },
   "click .teacherSelector": function(e,t){
@@ -249,6 +258,45 @@ Template.money.events({
     e.preventDefault();
     $('#myModal').modal('hide');
 
+    var total = 0;
+    var forTeacherAmount = t.find(".payToTeacherInput").value;
+    var TransactionJSON = {};
+    TransactionJSON.amount = parseInt(forTeacherAmount,10);
+    TransactionJSON.date = moment().utc(6).toISOString();
+    TransactionJSON.teacherId = Session.get('currentTeacherId');
+    TransactionJSON.forStudent = false;
+    Meteor.call("addPurseTransaction", TransactionJSON, function(error, result){
+      if(error){
+        console.log("error", error);
+      }
+      if(result){
+         console.log("for teacher: "+TransactionJSON);
+      }
+    });
+
+    console.log(forTeacherAmount);
+    $(".paymentPaid").each(function(ind, el){
+      // console.log(el.value);
+      if (el.value !== '') {
+        var sId = el.id;
+        var sTransactionNeg = parseInt(el.value, 10);
+        var TransactionJSON = {};
+        TransactionJSON.amount = -sTransactionNeg;
+        TransactionJSON.date = moment().utc(6).toISOString();
+        TransactionJSON.student = sId;
+        TransactionJSON.forStudent = true;
+        Meteor.call("addPurseTransaction", TransactionJSON, function(error, result){
+          if(error){
+            console.log("error", error);
+          }
+          if(result){
+             console.log(result);
+          }
+        });
+        total += parseInt(el.value, 10);
+      }
+    });
+    Session.set('totalToPay', total);
   },
   "click .monthSelector": function(e,t){
     e.preventDefault();
@@ -272,7 +320,7 @@ Template.money.events({
         total += parseInt(el.value, 10);
     });
     Session.set('totalToPay', total);
-    console.log('total is '+total);
+    // console.log('total is '+total);
   }
 });
 

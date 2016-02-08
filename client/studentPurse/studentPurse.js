@@ -5,12 +5,19 @@ Template.studentPurse.helpers({
   addOne: function(num){
     return num+1;
   },
+  TeacherPurseTransactions: function(){
+    return PurseTransactions.find({forStudent:false});
+  },
   PurseTransactions: function(){
-    return PurseTransactions.find({});
+    return PurseTransactions.find({forStudent:true});
   },
   parseDate: function(date){
     var newDate = moment(date).format('DD.MM.YYYY');
     return newDate;
+  },
+  getTeacher: function(tId){
+    var cTeacher = Teachers.findOne({_id: tId});
+    return cTeacher.firstName +' ' + cTeacher.lastName;
   },
   getStudent: function(sId){
     var cStudent = Students.findOne({_id: sId});
@@ -83,6 +90,7 @@ Template.studentPurse.events({
       TransactionJSON = {};
       TransactionJSON.amount = parseInt(amount, 10);
       TransactionJSON.date = isoDate;
+      TransactionJSON.forStudent = true;
       TransactionJSON.student = sId;
       Meteor.call('addPurseTransaction', TransactionJSON);
       Session.set('isCreatingTransaction',false);

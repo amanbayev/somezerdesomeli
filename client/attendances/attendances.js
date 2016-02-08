@@ -88,7 +88,9 @@ Template.attendances.helpers({
   },
   getUserById: function(userId){
     var cUser = Meteor.users.findOne({_id:userId});
-    return cUser.profile.firstName + ' ' + cUser.profile.lastName;
+    if (cUser)
+      return cUser.profile.firstName + ' ' + cUser.profile.lastName;
+    else return '';
   },
   getGroupNameById: function(gId){
     var cGroup = Groups.findOne({_id:gId, isActive:true});
@@ -431,8 +433,19 @@ Template.attendances.events({
     var cGroup = Groups.findOne({isActive:true, _id: gId});
     if (cGroup) {
       Session.set('thisGroupName', cGroup.name);
-      Session.set('thisAttendanceStudents', cGroup.students);
-      Session.set('attendingStudents', cGroup.students);
+      var students = cGroup.students;
+      var counter = 0;
+      var attendingStudentsArr = [];
+      students.forEach(function(sId, ind){
+        var cStudent = Students.findOne({_id: sId, isActive:true});
+        if (cStudent)
+          {
+            counter++;
+            attendingStudentsArr.push(cStudent._id);
+          }
+      });
+      Session.set('thisAttendanceStudents', attendingStudentsArr);
+      Session.set('attendingStudents', attendingStudentsArr);
       Session.set('skippingStudents', []);
       Session.set('excusedStudents', []);
       Session.set('thisGroupId', cGroup._id);
@@ -455,8 +468,19 @@ Template.attendances.events({
     $("#attendanceGroupSelect :nth-child(1)").attr("selected", "selected");
     var gId = t.find('#attendanceGroupSelect').value;
     var cGroup = Groups.findOne({isActive:true, _id: gId});
-    Session.set('thisAttendanceStudents', cGroup.students);
-    Session.set('attendingStudents', cGroup.students);
+    var students = cGroup.students;
+    var counter = 0;
+    var attendingStudentsArr = [];
+    students.forEach(function(sId, ind){
+      var cStudent = Students.findOne({_id: sId, isActive:true});
+      if (cStudent)
+        {
+          counter++;
+          attendingStudentsArr.push(cStudent._id);
+        }
+    });
+    Session.set('thisAttendanceStudents', attendingStudentsArr);
+    Session.set('attendingStudents', attendingStudentsArr);
     Session.set('skippingStudents', []);
     Session.set('excusedStudents', []);
     $('.excusedBtn').removeClass('btn-warning');

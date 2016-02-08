@@ -71,6 +71,33 @@ Template.students.helpers({
 });
 
 Template.students.events({
+  "click #deleteStudent": function(e,t){
+    e.preventDefault();
+    var sId = Session.get('currentStudentId');
+    console.log(sId);
+    Meteor.call("deleteStudent", sId, function(error, result){
+      if(error){
+        console.log("error", error);
+      }
+      if(result){
+         console.log('deleted');
+      }
+    });
+    Session.set('isCancellingStudent', true);
+    Session.set('isEditingStudent', false);
+
+    $('#createStudentForm').removeClass('animated bounceOutRight');
+    $('#createStudentForm').removeClass('animated bounceInLeft');
+    $('#createStudentForm').addClass('animated bounceOutLeft');
+    $('#createStudentForm').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+     function(){
+       if (Session.get('isCancellingStudent')){
+         Session.set('isEditingStudent', false);
+         Session.set('isCreatingStudent', false);
+         Session.set('isCancellingStudent', false);
+       }
+     });
+  },
   "click #createNewStudent": function(e, t){
      e.preventDefault();
      if (Session.get('isEditingStudent')) {
@@ -81,7 +108,12 @@ Template.students.events({
      t.find('#studentLastName').value = '';
      t.find('#studentPatronimicName').value = '';
      t.find('#studentMobileField').value = '';
-     t.find('#studentDiscountField').value = '0';
+
+     t.find('#studentEmail').value = '';
+     t.find('#studentMonthlyPrice').value = '';
+     t.find('#studentOneClassPrice').value = '';
+     t.find('#studentFathersOccupation').value = '';
+     t.find('#studentMothersOccupation').value = '';
      Session.set('thisStudentGroups', []);
      Session.set('isCreatingStudent', true);
      $('#createStudentForm').removeClass('animated bounceOutLeft');
@@ -143,8 +175,12 @@ Template.students.events({
     var pName = t.find('#studentPatronimicName').value;
     var mobile = t.find('#studentMobileField').value;
     var branch = t.find('#studentBranchField').value;
-    var discount = t.find('#studentDiscountField').value;
     var school = t.find('#studentSchoolSelect').value;
+    var email = t.find('#studentEmail').value;
+    var monthly = t.find('#studentMonthlyPrice').value;
+    var oneClass = t.find('#studentOneClassPrice').value;
+    var fathersOccupation = t.find('#studentFathersOccupation').value;
+    var mothersOccupation = t.find('#studentMothersOccupation').value;
     // console.log(school);
     var groups = Session.get('thisStudentGroups');
     var StudentJSON = {};
@@ -153,9 +189,15 @@ Template.students.events({
     StudentJSON.patronimicName = pName;
     StudentJSON.mobile = mobile;
     StudentJSON.branch = branch;
-    StudentJSON.discount = discount;
     StudentJSON.school = school;
     StudentJSON.groups = groups;
+
+    StudentJSON.email = email;
+    StudentJSON.monthly = monthly;
+    StudentJSON.oneClass = oneClass;
+    StudentJSON.fathersOccupation = fathersOccupation;
+    StudentJSON.mothersOccupation = mothersOccupation;
+
     if (Session.get('isEditingStudent')){
       var cStudent = Students.findOne({_id: Session.get('currentStudentId')});
       StudentJSON.isActive = cStudent.isActive;
@@ -251,7 +293,13 @@ Template.students.events({
     t.find('#studentLastName').value = cStudent.lastName;
     t.find('#studentPatronimicName').value = cStudent.patronimicName;
     t.find('#studentMobileField').value = cStudent.mobile;
-    t.find('#studentDiscountField').value = cStudent.discount;
+
+    t.find('#studentEmail').value = cStudent.email;
+    t.find('#studentMonthlyPrice').value = cStudent.monthly;
+    t.find('#studentOneClassPrice').value = cStudent.oneClass;
+    t.find('#studentFathersOccupation').value = cStudent.fathersOccupation;
+    t.find('#studentMothersOccupation').value = cStudent.mothersOccupation;
+
     schoolId = cStudent.school;
     // $('#studentSchoolSelect option:[value="'+schoolId+'"]');
     $('#studentSchoolSelect').val(schoolId);
