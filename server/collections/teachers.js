@@ -2,6 +2,7 @@ Teachers = new Mongo.Collection('teachers');
 Meteor.publish("teachers", function(argument){
   return Teachers.find({isActive:true}, {sort: {lastName:1, firstName:1}});
 });
+
 Meteor.methods({
   deleteTeacher: function(rowId){
     Teachers.update({_id:rowId}, {$set:{

@@ -19,7 +19,7 @@
       <div class="box box-primary">
         <div class="box-header with-border">
           <div class="col-xs-3 col-md-2">
-            {{> inputAutocomplete settings=settings class="form-control" id="teacherNameAutcomplete" placeholder="Мұғалімді таңданыз"}}
+            {{> inputAutocomplete settings=settings class="form-control" id="teacherNameAutcomplete" placeholder="Мұғалімнің жөні (фамилиясы)"}}
           </div>
 
 
@@ -28,9 +28,9 @@
               Мұғалімді таңданыз &nbsp;&nbsp;<span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-              {{#each Teachers}}
+              {{#each TeachersWithGroupsAndAttendances}}
                 <li>
-                  <a href="#" id="{{_id}}" class="teacherSelector">{{firstName}}&nbsp;{{lastName}}</a>
+                  <a href="#" id="{{_id}}" class="teacherSelector">{{lastName}}&nbsp;{{firstName}}</a>
                 </li>
               {{/each}}
             </ul>

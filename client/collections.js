@@ -8,7 +8,9 @@ Attendances = new Mongo.Collection('attendances');
 Money = new Mongo.Collection('money');
 PurseTransactions = new Mongo.Collection('PurseTransactions');
 
+
 Meteor.subscribe("schools");
+
 Meteor.subscribe("branches");
 Meteor.subscribe("subjects");
 Meteor.subscribe("teachers");

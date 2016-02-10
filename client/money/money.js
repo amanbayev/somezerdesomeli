@@ -195,6 +195,17 @@ Template.money.helpers({
   totalMoneyMustBePaid: function(){
     return 0;
   },
+  TeachersWithGroupsAndAttendances: function(){
+    var teachers = Teachers.find({}).fetch();
+    var teachersWithGroups = [];
+    teachers.forEach(function(teacherObj, ind){
+      if (teacherObj.groups.length > 0) {
+        // console.log(teacherObj.groups);
+        teachersWithGroups.push(teacherObj);
+      }
+    });
+    return teachersWithGroups;
+  },
   Teachers: function(){
     return Teachers.find({isActive:true},{sort: {lastName:1, firstName:1}});
   },
