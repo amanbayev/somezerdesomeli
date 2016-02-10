@@ -1,6 +1,6 @@
 Subjects = new Mongo.Collection('subjects');
 Meteor.publish("subjects", function(argument){
-  return Subjects.find({isActive:true});
+  return Subjects.find({isActive:true},{sort: {name:1}});
 });
 Meteor.methods({
   deleteSubject: function(rowId){

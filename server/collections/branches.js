@@ -1,6 +1,6 @@
 Branches = new Mongo.Collection('branches');
 Meteor.publish("branches", function(argument){
-  return Branches.find({isActive:true});
+  return Branches.find({isActive:true},{sort: {name:1}});
 });
 Meteor.methods({
   deleteBranch: function(rowId){

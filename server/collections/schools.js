@@ -2,7 +2,9 @@ Schools = new Mongo.Collection('schools');
 Meteor.publish("schools", function(argument){
   return Schools.find({
     isActive: true
-  });
+  },
+  {sort: {name:1}}
+);
 });
 Meteor.methods({
   deleteSchool: function(rowId){

@@ -1,5 +1,5 @@
 Meteor.publish('users', function(){
-  return Meteor.users.find({});
+  return Meteor.users.find({},{sort: {lastName:1, firstName: 1}});
 });
 
 Meteor.methods({

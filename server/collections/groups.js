@@ -1,6 +1,6 @@
 Groups = new Mongo.Collection('groups');
 Meteor.publish("groups", function(argument){
-  return Groups.find({isActive:true});
+  return Groups.find({isActive:true},{sort: {name: 1}});
 });
 Meteor.methods({
   deleteGroup: function(rowId){

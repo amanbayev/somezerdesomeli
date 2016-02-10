@@ -2,7 +2,7 @@ Attendances = new Mongo.Collection('attendances');
 Meteor.publish("attendances", function(argument){
   return Attendances.find({
     isActive: true
-  });
+  },{sort: {date: -1}});
 });
 Meteor.methods({
   deleteAttendance: function(rowId){
