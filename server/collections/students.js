@@ -1,6 +1,6 @@
 Students = new Mongo.Collection('students');
 Meteor.publish("students", function(argument){
-  return Students.find({isActive:true});
+  return Students.find({isActive:true},{sort: {lastName:1, firstName:1}});
 });
 Meteor.methods({
   deleteStudent: function(rowId){
