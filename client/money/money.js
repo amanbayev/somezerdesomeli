@@ -1,4 +1,18 @@
 Template.money.helpers({
+  settings: function(){
+    return {
+      position: "bottom",
+      limit: 10,
+      rules: [
+        {
+          collection: Teachers,
+          field: "lastName",
+          matchAll: true,
+          template: Template.teacherNamesTemplate
+        }
+      ]
+    };
+  },
   teacherPercent: function(){
     var tId = Session.get('currentTeacherId');
     if (tId) {
@@ -221,6 +235,14 @@ Template.money.helpers({
 });
 
 Template.money.events({
+  "autocompleteselect input": function(event, template, doc) {
+    // console.log("selected ", doc._id);
+    var tId = doc._id;
+    Session.set('currentTeacherId', tId);
+    $('.teacherNameBtn').text(doc.firstName+' '+doc.lastName);
+    Session.set('currentGroupId', undefined);
+    $('.subjectNameBtn').text('Мұғалім тобын таңданыз');
+  },
   "click #saveAndRecount": function(e,t){
     e.preventDefault();
     $('#myModal').modal('show');

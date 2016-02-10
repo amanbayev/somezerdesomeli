@@ -1,3 +1,7 @@
+<template name="teacherNamesTemplate">
+  {{firstName}} <b>{{lastName}}</b>
+</template>
+
 <template name="money">
   <section class="content-header">
     <h1>
@@ -14,6 +18,11 @@
     {{#if isInRole 'accountant,admin'}}
       <div class="box box-primary">
         <div class="box-header with-border">
+          <div class="col-xs-3 col-md-2">
+            {{> inputAutocomplete settings=settings class="form-control" id="teacherNameAutcomplete" placeholder="Мұғалімді таңданыз"}}
+          </div>
+
+
           <div class="btn-group">
             <button type="button" class="btn btn-info dropdown-toggle teacherNameBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Мұғалімді таңданыз &nbsp;&nbsp;<span class="caret"></span>
